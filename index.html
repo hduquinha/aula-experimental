@@ -98,6 +98,11 @@
       gap:5px;
     }
     .event-detail:last-child{border-right:0}
+    .event-detail--full{
+      grid-column:1/-1;
+      border-right:0;
+      border-top:1px solid var(--line);
+    }
     .event-detail small{
       color:var(--primary-light);
       font-size:.64rem;
@@ -273,6 +278,7 @@
       .form-card{padding:24px 18px}
       .event-details{grid-template-columns:1fr}
       .event-detail{border-right:0;border-bottom:1px solid var(--line)}
+      .event-detail--full{border-top:0}
       .event-detail:last-child{border-bottom:0}
     }
   </style>
@@ -286,7 +292,7 @@
     </div>
 
     <div class="event-info">
-      <div class="event-tag">Aula Experimental · Gratuita</div>
+      <div class="event-tag">Aula Experimental · Exclusiva</div>
       <div class="event-details">
         <div class="event-detail">
           <small>Data</small>
@@ -295,6 +301,10 @@
         <div class="event-detail">
           <small>Horário</small>
           <strong>18h59<br>às 21h09</strong>
+        </div>
+        <div class="event-detail event-detail--full">
+          <small>Local</small>
+          <strong>Rua Azevedo Soares, 1334<br>Tatuapé · São Paulo · SP</strong>
         </div>
       </div>
     </div>
@@ -435,8 +445,9 @@
         email: form.email.value.trim().toLowerCase(),
         nome_evento: 'Aula Experimental VOZUP',
         escola: 'VOZUP - Escola de Oratória e Inteligência Emocional',
-        modalidade: 'Aula experimental · presencial',
+        modalidade: 'Aula experimental · exclusiva · presencial',
         data: 'Terça-feira, 30 de Junho · 18h59 às 21h09',
+        local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
         origem: 'Aula Experimental',
         clientId: getClientId(),
         timestamp: new Date().toISOString(),
