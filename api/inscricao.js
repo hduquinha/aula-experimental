@@ -546,13 +546,14 @@ function normalizeWhatsAppNumber(number) {
 }
 
 function buildWorkshopLeadMessage(payload) {
-  const meta = payload._meta && typeof payload._meta === 'object' ? payload._meta : {};
+  const origem = payload.origem || payload.nome_evento || 'Workshop VozUP';
   return [
-    '🎤 Novo lead — Workshop VozUP',
+    `🎤 Novo lead — ${origem}`,
     `Nome: ${payload.nome || '-'}`,
     `WhatsApp: ${payload.telefone || payload.whatsapp || '-'}`,
     payload.email ? `Email: ${payload.email}` : '',
     payload.cidade ? `Cidade: ${payload.cidade}` : '',
+    payload.data ? `Data: ${payload.data}` : '',
     payload.interesse_workshop ? `Interesse: ${payload.interesse_workshop}` : '',
     `Recebido em: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`,
   ].filter(Boolean).join('\n');
