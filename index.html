@@ -58,6 +58,20 @@
       display:block;
       z-index:0;
     }
+    .bg-photo--1{
+      animation:fade1 12s ease-in-out infinite;
+    }
+    .bg-photo--2{
+      animation:fade2 12s ease-in-out infinite;
+    }
+    @keyframes fade1{
+      0%,45%{opacity:1}
+      55%,100%{opacity:0}
+    }
+    @keyframes fade2{
+      0%,45%{opacity:0}
+      55%,100%{opacity:1}
+    }
     .panel-left:before{
       content:"";
       position:absolute;
@@ -403,7 +417,8 @@
   <!-- ── LEFT: branding + event info ─────────────── -->
   <aside class="panel-left">
 
-    <img class="bg-photo" src="img/fachada.png" alt="" aria-hidden="true" />
+    <img class="bg-photo bg-photo--1" src="img/fachada.png" alt="" aria-hidden="true" />
+    <img class="bg-photo bg-photo--2" src="img/fachada-angular.png" alt="" aria-hidden="true" />
 
     <div class="logo-wrap" aria-hidden="true">
       <div class="logo-ring"></div>
