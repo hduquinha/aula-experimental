@@ -36,9 +36,15 @@ const PHONE_CONFLICT_DECISIONS = new Set([
 let pool;
 let schemaReadyPromise;
 
+const PLACEHOLDER_DB_URLS = new Set([
+  'postgres://user:pass@db.example.com:5432/app',
+  'postgres://usuario:senha@host:5432/banco',
+  'postgresql://usuario:senha@host:5432/banco',
+]);
+
 function getDatabaseUrl() {
   const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) {
+  if (!databaseUrl || PLACEHOLDER_DB_URLS.has(databaseUrl.trim())) {
     throw new Error('DATABASE_URL nao configurada nas variaveis de ambiente.');
   }
   return databaseUrl;
@@ -181,7 +187,7 @@ function getPool() {
       connectionString: sanitizeConnectionString(getDatabaseUrl()),
       ssl: getSslConfig(),
       max: 4,
-      connectionTimeoutMillis: 8000,
+      connectionTimeoutMillis: 4000,
     });
 
     pool.on('error', (err) => {
