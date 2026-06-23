@@ -37,50 +37,60 @@
 
     /* ── LEFT PANEL ─────────────────────────────── */
     .panel-left{
-      flex:0 0 42%;
+      flex:0 0 46%;
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:center;
-      gap:28px;
-      padding:48px 40px;
+      justify-content:flex-end;
+      gap:20px;
+      padding:40px 40px 44px;
       position:relative;
       overflow:hidden;
-      background:
-        linear-gradient(90deg,rgba(106,193,193,.06) 1px,transparent 1px),
-        linear-gradient(180deg,rgba(106,193,193,.06) 1px,transparent 1px),
-        linear-gradient(150deg,#000 0%,#061a1c 60%,#003238 100%);
-      background-size:54px 54px,54px 54px,auto;
+      background:#000;
     }
-    .panel-left:after{
-      content:"";
+    .panel-left .bg-photo{
       position:absolute;
-      bottom:-120px;
-      right:-120px;
-      width:380px;
-      height:380px;
-      border-radius:50%;
-      background:radial-gradient(circle,rgba(1,142,149,.18),transparent 70%);
-      pointer-events:none;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center top;
+      display:block;
+      z-index:0;
     }
     .panel-left:before{
       content:"";
       position:absolute;
-      top:-80px;
-      left:-80px;
-      width:260px;
-      height:260px;
-      border-radius:50%;
-      background:radial-gradient(circle,rgba(106,193,193,.10),transparent 70%);
+      inset:0;
+      z-index:1;
+      background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.10) 0%,
+        rgba(0,0,0,.30) 35%,
+        rgba(0,0,0,.72) 65%,
+        rgba(0,4,5,.92) 100%
+      );
       pointer-events:none;
     }
-    .panel-left>*{position:relative;z-index:1}
+    .panel-left:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:linear-gradient(
+        to right,
+        transparent 60%,
+        rgba(0,0,0,.55) 100%
+      );
+      pointer-events:none;
+    }
+    .panel-left>*{position:relative;z-index:2}
 
     /* Logo circular */
     .logo-wrap{
       position:relative;
-      width:120px;
-      height:120px;
+      width:96px;
+      height:96px;
       flex-shrink:0;
     }
     .logo-ring{
@@ -120,6 +130,7 @@
       color:#fff;
       line-height:1;
       margin-bottom:6px;
+      text-shadow:0 2px 12px rgba(0,0,0,.8);
     }
     .school-name span{
       font-size:.7rem;
@@ -127,6 +138,7 @@
       color:var(--primary-light);
       text-transform:uppercase;
       letter-spacing:1px;
+      text-shadow:0 1px 6px rgba(0,0,0,.9);
     }
 
     /* Divider */
@@ -165,10 +177,12 @@
       display:flex;
       flex-direction:column;
       gap:0;
-      border:1px solid var(--line);
+      border:1px solid rgba(106,193,193,.28);
       border-radius:10px;
       overflow:hidden;
-      background:rgba(0,0,0,.32);
+      background:rgba(0,8,10,.62);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
     }
     .event-row{
       display:flex;
@@ -355,9 +369,12 @@
       .panel-left{
         flex:none;
         padding:32px 24px 28px;
-        gap:20px;
+        gap:18px;
+        min-height:320px;
+        justify-content:flex-end;
       }
-      .logo-wrap{width:90px;height:90px}
+      .panel-left .bg-photo{object-position:center 30%}
+      .logo-wrap{width:80px;height:80px}
       .logo-img{inset:4px;width:calc(100% - 8px);height:calc(100% - 8px)}
       .school-name h1{font-size:1.2rem}
       .event-details{display:grid;grid-template-columns:1fr 1fr}
@@ -385,6 +402,8 @@
 
   <!-- ── LEFT: branding + event info ─────────────── -->
   <aside class="panel-left">
+
+    <img class="bg-photo" src="img/fachada.jpg" alt="" aria-hidden="true" />
 
     <div class="logo-wrap" aria-hidden="true">
       <div class="logo-ring"></div>
