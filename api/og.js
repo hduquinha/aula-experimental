@@ -111,7 +111,7 @@ export default function handler(req, res) {
   <text x="870" y="548" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="18" font-weight="900" fill="#1a0a00" letter-spacing="0.5">GARANTIR MINHA VAGA</text>
 
   <!-- Bottom URL -->
-  <text x="600" y="608" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#3d6062" letter-spacing="0.5">vozup-aula-experimental.vercel.app</text>
+  <text x="600" y="608" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#3d6062" letter-spacing="0.5">vozup-campanha-b.vercel.app</text>
 </svg>`;
 
   res.setHeader("Content-Type", "image/svg+xml");
