@@ -558,6 +558,7 @@ function buildWorkshopLeadMessage(payload) {
     `Nome: ${payload.nome || '-'}`,
     `WhatsApp: ${payload.telefone || payload.whatsapp || '-'}`,
     payload.email ? `Email: ${payload.email}` : '',
+    payload.como_conheceu ? `Como conheceu: ${payload.como_conheceu}${payload.indicacao_nome ? ` (${payload.indicacao_nome})` : ''}` : '',
     payload.cidade ? `Cidade: ${payload.cidade}` : '',
     payload.data ? `Data: ${payload.data}` : '',
     payload.interesse_workshop ? `Interesse: ${payload.interesse_workshop}` : '',

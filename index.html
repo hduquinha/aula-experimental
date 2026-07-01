@@ -311,6 +311,26 @@
       box-shadow:0 0 0 3px rgba(1,142,149,.18);
       background:#0d1a1b;
     }
+    .field select{
+      width:100%;
+      height:50px;
+      border:1.5px solid rgba(106,193,193,.22);
+      border-radius:8px;
+      background:#0f1e1f;
+      color:#fff;
+      padding:0 14px;
+      font:inherit;
+      font-size:.88rem;
+      font-weight:600;
+      transition:border-color .18s,box-shadow .18s;
+      outline:none;
+    }
+    .field select:invalid{color:#3a5658}
+    .field select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(1,142,149,.18);
+      background:#0d1a1b;
+    }
     .field-error{
       min-height:14px;
       color:var(--danger);
@@ -563,9 +583,20 @@
           </div>
 
           <div class="field">
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" inputmode="email" placeholder="seuemail@exemplo.com" autocomplete="email" required />
-            <span class="field-error" data-for="email"></span>
+            <label for="comoConheceu">Por onde conheceu a gente?</label>
+            <select id="comoConheceu" name="comoConheceu" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Fachada">Fachada</option>
+              <option value="Redes sociais">Redes sociais</option>
+              <option value="Indicação">Indicação</option>
+            </select>
+            <span class="field-error" data-for="comoConheceu"></span>
+          </div>
+
+          <div class="field" id="indicacaoField" hidden>
+            <label for="indicacaoNome">Quem te indicou?</label>
+            <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
+            <span class="field-error" data-for="indicacaoNome"></span>
           </div>
         </div>
 
@@ -603,6 +634,12 @@
       else                   this.value = d ? `(${d}` : '';
     });
 
+    const indicacaoField = document.getElementById('indicacaoField');
+    document.getElementById('comoConheceu').addEventListener('change', function(){
+      indicacaoField.hidden = this.value !== 'Indicação';
+      if(indicacaoField.hidden) form.indicacaoNome.value = '';
+    });
+
     function clearErrors(){
       form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
     }
@@ -622,9 +659,11 @@
       if(!digits){ setError('telefone','Campo obrigatório.'); ok=false; }
       else if(digits.length < 10 || digits.length > 11){ setError('telefone','Informe um número válido com DDD.'); ok=false; }
 
-      const email = form.email.value.trim();
-      if(!email){ setError('email','Campo obrigatório.'); ok=false; }
-      else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setError('email','Informe um e-mail válido.'); ok=false; }
+      const comoConheceu = form.comoConheceu.value;
+      if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
+      else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
+        setError('indicacaoNome','Informe quem te indicou.'); ok=false;
+      }
       return ok;
     }
 
@@ -651,7 +690,8 @@
       const payload = {
         nome: toTitleCase(form.nome.value),
         telefone: form.telefone.value.replace(/\D+/g,''),
-        email: form.email.value.trim().toLowerCase(),
+        como_conheceu: form.comoConheceu.value,
+        indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
         nome_evento: 'Aula Exclusiva VOZUP',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
         modalidade: 'Aula exclusiva · presencial',
