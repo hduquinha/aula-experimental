@@ -291,7 +291,7 @@
       font-weight:800;
       letter-spacing:.2px;
     }
-    .field input{
+    .field input,.field textarea{
       width:100%;
       height:50px;
       border:1.5px solid rgba(106,193,193,.22);
@@ -305,8 +305,8 @@
       transition:border-color .18s,box-shadow .18s;
       outline:none;
     }
-    .field input::placeholder{color:#3a5658;font-weight:500}
-    .field input:focus{
+    .field input::placeholder,.field textarea::placeholder{color:#3a5658;font-weight:500}
+    .field input:focus,.field textarea:focus{
       border-color:var(--primary);
       box-shadow:0 0 0 3px rgba(1,142,149,.18);
       background:#0d1a1b;
@@ -331,6 +331,7 @@
       box-shadow:0 0 0 3px rgba(1,142,149,.18);
       background:#0d1a1b;
     }
+    .field textarea{height:auto;min-height:96px;padding:12px 14px;resize:vertical;line-height:1.45}
     .field[hidden]{display:none}
     .field-error{
       min-height:14px;
@@ -584,6 +585,32 @@
           </div>
 
           <div class="field">
+            <label for="profissao">Qual sua profissão?</label>
+            <input id="profissao" name="profissao" type="text" placeholder="Ex.: advogada, engenheiro, vendedor..." autocomplete="organization-title" required />
+            <span class="field-error" data-for="profissao"></span>
+          </div>
+
+          <div class="field">
+            <label for="objetivo">Por que você se interessou em desenvolver sua comunicação, oratória e inteligência emocional?</label>
+            <select id="objetivo" name="objetivo" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Quero melhorar minha performance no ambiente de trabalho">Quero melhorar minha performance no ambiente de trabalho</option>
+              <option value="Quero perder o medo de falar em público">Quero perder o medo de falar em público</option>
+              <option value="Quero começar a ministrar palestras e treinamentos">Quero começar a ministrar palestras e treinamentos</option>
+              <option value="Quero destravar para gravar vídeos para a internet">Quero destravar para gravar vídeos para a internet</option>
+              <option value="Quero melhorar meus relacionamentos interpessoais">Quero melhorar meus relacionamentos interpessoais</option>
+              <option value="Quero aumentar minhas habilidades para network">Quero aumentar minhas habilidades para network</option>
+            </select>
+            <span class="field-error" data-for="objetivo"></span>
+          </div>
+
+          <div class="field">
+            <label for="maiorDor">Qual a sua maior dor em relação à comunicação?</label>
+            <textarea id="maiorDor" name="maiorDor" rows="3" placeholder="Conte pra gente com suas palavras" required></textarea>
+            <span class="field-error" data-for="maiorDor"></span>
+          </div>
+
+          <div class="field">
             <label for="comoConheceu">Por onde conheceu a gente?</label>
             <select id="comoConheceu" name="comoConheceu" required>
               <option value="" disabled selected>Selecione uma opção</option>
@@ -660,6 +687,12 @@
       if(!digits){ setError('telefone','Campo obrigatório.'); ok=false; }
       else if(digits.length < 10 || digits.length > 11){ setError('telefone','Informe um número válido com DDD.'); ok=false; }
 
+      if(!form.profissao.value.trim()){ setError('profissao','Campo obrigatório.'); ok=false; }
+
+      if(!form.objetivo.value){ setError('objetivo','Selecione uma opção.'); ok=false; }
+
+      if(!form.maiorDor.value.trim()){ setError('maiorDor','Campo obrigatório.'); ok=false; }
+
       const comoConheceu = form.comoConheceu.value;
       if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
       else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
@@ -691,6 +724,9 @@
       const payload = {
         nome: toTitleCase(form.nome.value),
         telefone: form.telefone.value.replace(/\D+/g,''),
+        profissao: toTitleCase(form.profissao.value),
+        objetivo: form.objetivo.value,
+        maior_dor_comunicacao: form.maiorDor.value.trim(),
         como_conheceu: form.comoConheceu.value,
         indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
         nome_evento: 'Aula Exclusiva VOZUP',
