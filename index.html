@@ -605,8 +605,8 @@
           </div>
 
           <div class="field">
-            <label for="maiorDor">Qual a sua maior dor em relação à comunicação?</label>
-            <textarea id="maiorDor" name="maiorDor" rows="3" placeholder="Conte pra gente com suas palavras" required></textarea>
+            <label for="maiorDor">Qual o seu maior desafio em relação à comunicação? <span style="font-weight:500;color:#8aaeaf">(opcional)</span></label>
+            <textarea id="maiorDor" name="maiorDor" rows="3" placeholder="Conte pra gente com suas palavras"></textarea>
             <span class="field-error" data-for="maiorDor"></span>
           </div>
 
@@ -691,8 +691,6 @@
 
       if(!form.objetivo.value){ setError('objetivo','Selecione uma opção.'); ok=false; }
 
-      if(!form.maiorDor.value.trim()){ setError('maiorDor','Campo obrigatório.'); ok=false; }
-
       const comoConheceu = form.comoConheceu.value;
       if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
       else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
@@ -726,7 +724,7 @@
         telefone: form.telefone.value.replace(/\D+/g,''),
         profissao: toTitleCase(form.profissao.value),
         objetivo: form.objetivo.value,
-        maior_dor_comunicacao: form.maiorDor.value.trim(),
+        maior_desafio_comunicacao: form.maiorDor.value.trim(),
         como_conheceu: form.comoConheceu.value,
         indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
         nome_evento: 'Aula Exclusiva VOZUP',
