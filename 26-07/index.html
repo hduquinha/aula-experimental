@@ -326,6 +326,27 @@
       box-shadow:0 0 0 3px rgba(1,142,149,.18);
       background:#0d1a1b;
     }
+    .field select{
+      width:100%;
+      height:52px;
+      border:1.5px solid rgba(106,193,193,.22);
+      border-radius:8px;
+      background:#0f1e1f;
+      color:#fff;
+      padding:0 14px;
+      font:inherit;
+      font-size:.9rem;
+      font-weight:600;
+      transition:border-color .18s,box-shadow .18s;
+      outline:none;
+    }
+    .field select:invalid{color:#8aaeaf}
+    .field select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(1,142,149,.18);
+      background:#0d1a1b;
+    }
+    .field[hidden]{display:none}
     .field-error{
       min-height:14px;
       color:var(--danger);
@@ -493,7 +514,7 @@
 
       <div class="form-header">
         <h2>Confirme sua presença</h2>
-        <p>Deixe seu nome e WhatsApp para confirmar sua presença.</p>
+        <p>Preencha os dados abaixo para confirmar sua presença.</p>
       </div>
 
       <form id="regForm" novalidate>
@@ -508,6 +529,25 @@
             <label for="telefone">Telefone / WhatsApp</label>
             <input id="telefone" name="telefone" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel" required />
             <span class="field-error" data-for="telefone"></span>
+          </div>
+
+          <div class="field">
+            <label for="comoConheceu">Como você conheceu a VOZUP?</label>
+            <select id="comoConheceu" name="comoConheceu" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Fachada">Passei em frente / fachada</option>
+              <option value="Redes sociais">Redes sociais</option>
+              <option value="Indicação">Indicação de amigo/conhecido</option>
+              <option value="Google / internet">Google / internet</option>
+              <option value="Já sou aluno(a)">Já sou aluno(a)</option>
+            </select>
+            <span class="field-error" data-for="comoConheceu"></span>
+          </div>
+
+          <div class="field" id="indicacaoField" hidden>
+            <label for="indicacaoNome">Quem te indicou?</label>
+            <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
+            <span class="field-error" data-for="indicacaoNome"></span>
           </div>
         </div>
 
@@ -543,6 +583,12 @@
       else                   this.value = d ? `(${d}` : '';
     });
 
+    const indicacaoField = document.getElementById('indicacaoField');
+    document.getElementById('comoConheceu').addEventListener('change', function(){
+      indicacaoField.hidden = this.value !== 'Indicação';
+      if(indicacaoField.hidden) form.indicacaoNome.value = '';
+    });
+
     function clearErrors(){
       form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
     }
@@ -561,6 +607,12 @@
       const digits = form.telefone.value.replace(/\D+/g,'');
       if(!digits){ setError('telefone','Campo obrigatório.'); ok=false; }
       else if(digits.length < 10 || digits.length > 11){ setError('telefone','Informe um número válido com DDD.'); ok=false; }
+
+      const comoConheceu = form.comoConheceu.value;
+      if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
+      else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
+        setError('indicacaoNome','Informe quem te indicou.'); ok=false;
+      }
 
       return ok;
     }
@@ -588,6 +640,8 @@
       const payload = {
         nome: toTitleCase(form.nome.value),
         telefone: form.telefone.value.replace(/\D+/g,''),
+        como_conheceu: form.comoConheceu.value,
+        indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
         nome_evento: 'Inauguração VOZUP',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
         modalidade: 'Inauguração · presencial',
