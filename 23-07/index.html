@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
   <script defer src="/clarity.js"></script>
   <title>Inauguração VOZUP · 23 de Julho</title>
@@ -27,7 +27,7 @@
 
   <link rel="icon" href="/img/vozup-logo.jpeg" />
   <link rel="apple-touch-icon" href="/img/vozup-logo.jpeg" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#04090a" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -36,37 +36,50 @@
       --primary:#018E95;
       --primary-dark:#007881;
       --primary-light:#6AC1C1;
-      --line:rgba(106,193,193,.2);
       --gold:#f59e0b;
       --gold-light:#fcd34d;
-      --danger:#e03131;
+      --gold-deep:#e8890a;
+      --ink:#04090a;
+      --panel:#080d0e;
+      --field-bg:#0d1a1b;
+      --line:rgba(106,193,193,.16);
+      --line-strong:rgba(106,193,193,.28);
+      --text:#eef8f8;
+      --muted:#8fb1b2;
+      --muted-soft:#5f8082;
+      --danger:#ff6b6b;
+      --radius:16px;
+      --shadow-lg:0 30px 70px -30px rgba(0,0,0,.85);
     }
 
-    *{box-sizing:border-box;-webkit-font-smoothing:antialiased;margin:0;padding:0}
+    *{box-sizing:border-box;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;margin:0;padding:0}
+    ::selection{background:rgba(1,142,149,.55);color:#fff}
 
     html,body{height:100%}
 
     body{
       font-family:'Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-      background:#000;
-      color:#fff;
+      background:var(--ink);
+      color:var(--text);
       display:flex;
       align-items:stretch;
-      min-height:100vh;
+      min-height:100dvh;
+      line-height:1.5;
     }
 
-    /* ── LEFT PANEL ─────────────────────────────── */
+    /* ══════════════ LEFT / HERO ══════════════ */
     .panel-left{
-      flex:0 0 46%;
+      flex:0 0 48%;
       display:flex;
       flex-direction:column;
-      align-items:center;
       justify-content:flex-end;
-      gap:20px;
-      padding:40px 40px 44px;
+      gap:22px;
+      padding:52px 52px 56px;
+      padding-left:max(52px,env(safe-area-inset-left));
       position:relative;
       overflow:hidden;
       background:#000;
+      isolation:isolate;
     }
     .panel-left .bg-photo{
       position:absolute;
@@ -77,476 +90,376 @@
       object-position:center top;
       display:block;
       z-index:0;
+      transform:scale(1.06);
+      animation:kenburns 20s ease-in-out infinite alternate;
+      will-change:transform,opacity;
     }
-    .bg-photo--1{
-      animation:fade1 12s ease-in-out infinite;
-    }
-    .bg-photo--2{
-      animation:fade2 12s ease-in-out infinite;
-    }
-    @keyframes fade1{
-      0%,45%{opacity:1}
-      55%,100%{opacity:0}
-    }
-    @keyframes fade2{
-      0%,45%{opacity:0}
-      55%,100%{opacity:1}
-    }
+    .bg-photo--1{animation:kenburns 20s ease-in-out infinite alternate, fade1 16s ease-in-out infinite}
+    .bg-photo--2{animation:kenburns 20s ease-in-out infinite alternate-reverse, fade2 16s ease-in-out infinite}
+    @keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.14)}}
+    @keyframes fade1{0%,42%{opacity:1}58%,100%{opacity:0}}
+    @keyframes fade2{0%,42%{opacity:0}58%,100%{opacity:1}}
+
+    /* cinematic gradients + glows */
     .panel-left:before{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:1;
-      background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,.10) 0%,
-        rgba(0,0,0,.30) 35%,
-        rgba(0,0,0,.72) 65%,
-        rgba(0,4,5,.92) 100%
-      );
-      pointer-events:none;
+      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:
+        radial-gradient(120% 80% at 15% 8%, rgba(1,142,149,.34) 0%, transparent 46%),
+        radial-gradient(90% 70% at 100% 100%, rgba(245,158,11,.16) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(0,0,0,.05) 0%, rgba(0,0,0,.34) 42%, rgba(2,8,9,.82) 78%, #04090a 100%);
     }
     .panel-left:after{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:1;
-      background:linear-gradient(
-        to right,
-        transparent 60%,
-        rgba(0,0,0,.55) 100%
-      );
-      pointer-events:none;
+      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:linear-gradient(to right, transparent 55%, rgba(4,9,10,.6) 100%);
     }
-    .panel-left>*{position:relative;z-index:2}
+    .grain{
+      position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .panel-left>*:not(.bg-photo):not(.grain):not(.brand){position:relative;z-index:3}
 
-    /* Logo circular */
-    .logo-wrap{
-      position:relative;
-      width:96px;
-      height:96px;
-      flex-shrink:0;
+    .brand{
+      position:absolute;top:0;left:0;right:0;z-index:3;
+      display:flex;align-items:center;gap:14px;
+      padding:34px 52px;
+      padding-left:max(52px,env(safe-area-inset-left));
     }
+    .logo-wrap{position:relative;width:56px;height:56px;flex-shrink:0}
     .logo-ring{
-      position:absolute;
-      inset:-5px;
-      border-radius:50%;
-      background:conic-gradient(var(--primary-light),var(--primary),var(--primary-light));
-      animation:spin 8s linear infinite;
+      position:absolute;inset:-4px;border-radius:50%;
+      background:conic-gradient(from 0deg,var(--primary-light),var(--primary),var(--gold-light),var(--primary-light));
+      animation:spin 9s linear infinite;filter:blur(.2px);
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-    .logo-bg{
-      position:absolute;
-      inset:3px;
-      border-radius:50%;
-      background:#000;
-      z-index:1;
-    }
-    .logo-img{
-      position:absolute;
-      inset:5px;
-      border-radius:50%;
-      object-fit:cover;
-      width:calc(100% - 10px);
-      height:calc(100% - 10px);
-      z-index:2;
-      display:block;
-    }
+    .logo-bg{position:absolute;inset:2px;border-radius:50%;background:#000;z-index:1}
+    .logo-img{position:absolute;inset:4px;border-radius:50%;object-fit:cover;width:calc(100% - 8px);height:calc(100% - 8px);z-index:2;display:block}
+    .brand-name{display:flex;flex-direction:column;line-height:1.05}
+    .brand-name b{font-size:1.18rem;font-weight:900;letter-spacing:2px;color:#fff}
+    .brand-name span{font-size:.56rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--primary-light)}
 
-    /* School name */
-    .school-name{
-      text-align:center;
-    }
-    .school-name h1{
-      font-size:1.5rem;
-      font-weight:900;
-      letter-spacing:.5px;
-      color:#fff;
-      line-height:1;
-      margin-bottom:6px;
-      text-shadow:0 2px 12px rgba(0,0,0,.8);
-    }
-    .school-name span{
-      font-size:.7rem;
-      font-weight:700;
-      color:var(--primary-light);
-      text-transform:uppercase;
-      letter-spacing:1px;
-      text-shadow:0 1px 6px rgba(0,0,0,.9);
-    }
+    .hero{display:flex;flex-direction:column;gap:18px;max-width:460px}
 
-    /* Welcome line */
-    .welcome-line{
-      text-align:center;
-      color:#eafbfc;
-      font-size:.92rem;
-      font-weight:700;
-      line-height:1.4;
-      max-width:320px;
-      text-shadow:0 2px 10px rgba(0,0,0,.85);
-    }
-    .welcome-line strong{color:var(--gold-light);font-weight:900}
-
-    /* Divider */
-    .divider{
-      width:48px;
-      height:2px;
-      background:linear-gradient(90deg,transparent,var(--primary),transparent);
-    }
-
-    /* Event badge */
     .event-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      padding:6px 14px;
-      border:1px solid rgba(245,158,11,.32);
-      border-radius:999px;
-      background:rgba(245,158,11,.10);
+      align-self:flex-start;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 16px;border-radius:999px;
+      border:1px solid rgba(245,158,11,.4);
+      background:linear-gradient(180deg,rgba(245,158,11,.2),rgba(245,158,11,.08));
       color:var(--gold-light);
-      font-size:.64rem;
-      font-weight:900;
-      letter-spacing:.9px;
-      text-transform:uppercase;
+      font-size:.66rem;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;
+      box-shadow:0 6px 20px -8px rgba(245,158,11,.5);
+      backdrop-filter:blur(6px);
     }
-    .event-badge:before{
-      content:"";
-      width:7px;height:7px;
-      border-radius:50%;
-      background:var(--gold);
-      flex-shrink:0;
-    }
+    .event-badge .spark{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px 1px var(--gold);animation:twinkle 2s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.7)}}
 
-    /* Event details list */
-    .event-details{
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      gap:0;
-      border:1px solid rgba(106,193,193,.28);
-      border-radius:10px;
-      overflow:hidden;
-      background:rgba(0,8,10,.62);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
+    .hero h1{
+      font-size:clamp(2rem,4.6vw,3.15rem);
+      font-weight:900;line-height:1.02;letter-spacing:-.5px;color:#fff;
+      text-shadow:0 4px 30px rgba(0,0,0,.6);
     }
-    .event-row{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:13px 18px;
-      border-bottom:1px solid var(--line);
-    }
-    .event-row:last-child{border-bottom:0}
-    .event-icon{
-      width:34px;height:34px;
-      border-radius:8px;
-      background:rgba(1,142,149,.15);
-      display:grid;
-      place-items:center;
-      flex-shrink:0;
-      color:var(--primary-light);
-    }
-    .event-row-text small{
-      display:block;
-      color:var(--primary-light);
-      font-size:.6rem;
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      margin-bottom:2px;
-    }
-    .event-row-text strong{
-      color:#fff;
-      font-size:.84rem;
-      font-weight:800;
-      line-height:1.25;
-    }
+    .hero h1 em{font-style:normal;color:var(--primary-light);position:relative;white-space:nowrap}
+    .hero h1 em:after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.14em;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--gold));opacity:.65}
+    .hero p{color:#cfe6e6;font-size:1rem;font-weight:600;max-width:400px;text-shadow:0 2px 14px rgba(0,0,0,.7)}
 
-    /* ── RIGHT PANEL ─────────────────────────────── */
+    .date-pill{
+      align-self:flex-start;margin-top:4px;
+      display:inline-flex;align-items:center;gap:12px;
+      padding:12px 18px;border-radius:14px;
+      border:1px solid var(--line-strong);
+      background:rgba(4,14,15,.55);
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      box-shadow:0 12px 30px -16px rgba(0,0,0,.8);
+    }
+    .date-pill .ico{
+      width:38px;height:38px;border-radius:10px;flex-shrink:0;
+      display:grid;place-items:center;color:#04191a;
+      background:linear-gradient(135deg,var(--primary-light),var(--primary));
+      box-shadow:0 6px 16px -6px rgba(1,142,149,.7);
+    }
+    .date-pill small{display:block;color:var(--primary-light);font-size:.58rem;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:2px}
+    .date-pill strong{color:#fff;font-size:.98rem;font-weight:800}
+
+    /* ══════════════ RIGHT / FORM ══════════════ */
     .panel-right{
       flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:48px 40px;
-      background:#0a0f10;
+      display:flex;align-items:center;justify-content:center;
+      padding:48px 44px;
+      padding-right:max(44px,env(safe-area-inset-right));
+      position:relative;
+      background:
+        radial-gradient(90% 60% at 100% 0%, rgba(1,142,149,.1) 0%, transparent 55%),
+        radial-gradient(70% 60% at 0% 100%, rgba(245,158,11,.06) 0%, transparent 55%),
+        var(--panel);
       border-left:1px solid var(--line);
     }
 
-    .form-wrap{
-      width:100%;
-      max-width:400px;
+    .form-card{
+      position:relative;
+      width:100%;max-width:432px;
+      padding:36px 34px 30px;
+      border-radius:24px;
+      background:linear-gradient(180deg,rgba(18,32,33,.72),rgba(9,17,18,.9));
+      border:1px solid var(--line-strong);
+      box-shadow:var(--shadow-lg);
+      backdrop-filter:blur(10px);
+      overflow:hidden;
+    }
+    .form-card:before{
+      content:"";position:absolute;top:0;left:24px;right:24px;height:2px;border-radius:2px;
+      background:linear-gradient(90deg,transparent,var(--gold),var(--primary-light),transparent);
+      opacity:.8;
     }
 
-    .form-header{
-      margin-bottom:28px;
+    .form-header{margin-bottom:24px}
+    .form-header .kicker{
+      display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;
+      color:var(--primary-light);font-size:.6rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
     }
-    .form-header h2{
-      font-size:1.55rem;
-      font-weight:900;
-      color:#fff;
-      line-height:1.1;
-      margin-bottom:8px;
-    }
-    .form-header p{
-      color:#8aaeaf;
-      font-size:.82rem;
-      font-weight:600;
-      line-height:1.5;
-    }
+    .form-header .kicker:before{content:"";width:16px;height:1.5px;background:var(--primary)}
+    .form-header h2{font-size:1.68rem;font-weight:900;color:#fff;line-height:1.08;letter-spacing:-.3px;margin-bottom:8px}
+    .form-header p{color:var(--muted);font-size:.85rem;font-weight:600}
 
     .fields{display:flex;flex-direction:column;gap:16px}
+    .field{display:flex;flex-direction:column;gap:7px;animation:rise .5s both}
+    .field label{color:#d6ecec;font-size:.76rem;font-weight:800;letter-spacing:.2px}
 
-    .field{display:flex;flex-direction:column;gap:6px}
-    .field label{
-      color:#d4eaeb;
-      font-size:.78rem;
-      font-weight:800;
-      letter-spacing:.2px;
+    .control{position:relative;display:flex;align-items:center}
+    .control .ico{
+      position:absolute;left:15px;display:grid;place-items:center;
+      color:var(--muted-soft);pointer-events:none;transition:color .18s;
     }
-    .field input{
-      width:100%;
-      height:52px;
-      border:1.5px solid rgba(106,193,193,.22);
-      border-radius:8px;
-      background:#0f1e1f;
+    .control input,.control select{
+      width:100%;height:54px;
+      border:1.5px solid var(--line-strong);
+      border-radius:13px;
+      background:var(--field-bg);
       color:#fff;
-      padding:0 14px;
-      font:inherit;
-      font-size:.9rem;
-      font-weight:600;
-      transition:border-color .18s,box-shadow .18s;
+      padding:0 14px 0 46px;
+      font:inherit;font-size:.92rem;font-weight:600;
+      transition:border-color .2s,box-shadow .2s,background .2s;
       outline:none;
+      -webkit-appearance:none;appearance:none;
     }
-    .field input::placeholder{color:#3a5658;font-weight:500}
-    .field input:focus{
+    .control input::placeholder{color:#3f5c5e;font-weight:500}
+    .control input:focus,.control select:focus{
       border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(1,142,149,.18);
-      background:#0d1a1b;
+      box-shadow:0 0 0 4px rgba(1,142,149,.16);
+      background:#0f2021;
     }
-    .field select{
-      width:100%;
-      height:52px;
-      border:1.5px solid rgba(106,193,193,.22);
-      border-radius:8px;
-      background:#0f1e1f;
-      color:#fff;
-      padding:0 14px;
-      font:inherit;
-      font-size:.9rem;
-      font-weight:600;
-      transition:border-color .18s,box-shadow .18s;
-      outline:none;
+    .control:focus-within .ico{color:var(--primary-light)}
+    .control select{cursor:pointer;color:#fff;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='%236AC1C1' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 16px center;padding-right:42px;
     }
-    .field select:invalid{color:#8aaeaf}
-    .field select:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(1,142,149,.18);
-      background:#0d1a1b;
-    }
+    .control select:required:invalid{color:#5f8082}
     .field[hidden]{display:none}
-    .field-error{
-      min-height:14px;
-      color:var(--danger);
-      font-size:.7rem;
-      font-weight:800;
-    }
+    .field-error{min-height:13px;color:var(--danger);font-size:.7rem;font-weight:800;padding-left:2px}
 
     .btn-submit{
-      width:100%;
-      margin-top:22px;
-      appearance:none;
-      border:none;
-      border-radius:8px;
-      background:linear-gradient(135deg,var(--gold),#e8890a);
-      color:#1a0a00;
-      cursor:pointer;
-      height:54px;
-      padding:0 22px;
-      font:inherit;
-      font-weight:900;
-      font-size:.95rem;
-      letter-spacing:.3px;
-      transition:transform .18s,box-shadow .18s,filter .18s;
-      box-shadow:0 8px 24px rgba(245,158,11,.32);
+      position:relative;overflow:hidden;
+      width:100%;margin-top:24px;
+      appearance:none;border:none;border-radius:13px;
+      background:linear-gradient(135deg,var(--gold-light),var(--gold) 45%,var(--gold-deep));
+      color:#231000;cursor:pointer;
+      height:56px;padding:0 46px 0 22px;
+      font:inherit;font-weight:900;font-size:.98rem;letter-spacing:.3px;
+      transition:transform .18s,box-shadow .22s,filter .18s;
+      box-shadow:0 14px 34px -12px rgba(245,158,11,.65),inset 0 1px 0 rgba(255,255,255,.4);
     }
-    .btn-submit:hover:not(:disabled){
-      transform:translateY(-2px);
-      box-shadow:0 14px 32px rgba(245,158,11,.42);
-      filter:brightness(1.06);
+    .btn-submit:after{
+      content:"";position:absolute;right:20px;top:50%;width:9px;height:9px;
+      border-right:2.5px solid #231000;border-top:2.5px solid #231000;
+      transform:translateY(-50%) rotate(45deg);transition:right .18s,opacity .18s;
     }
+    .btn-submit:before{
+      content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;
+      background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+      transform:skewX(-18deg);animation:sheen 4.5s ease-in-out infinite;
+    }
+    @keyframes sheen{0%,20%{left:-60%}55%,100%{left:130%}}
+    .btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 20px 42px -12px rgba(245,158,11,.75),inset 0 1px 0 rgba(255,255,255,.45);filter:brightness(1.05)}
+    .btn-submit:hover:not(:disabled):after{right:16px}
     .btn-submit:active:not(:disabled){transform:translateY(0)}
-    .btn-submit:disabled{opacity:.6;cursor:not-allowed}
+    .btn-submit:disabled{cursor:wait;filter:saturate(.6) brightness(.9)}
+    .btn-submit:disabled:after,.btn-submit:disabled:before{opacity:0;animation:none}
 
     .form-note{
-      margin-top:14px;
-      color:#3d6062;
-      font-size:.72rem;
-      font-weight:600;
-      text-align:center;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
+      margin-top:16px;color:var(--muted-soft);font-size:.72rem;font-weight:600;
+      text-align:center;display:flex;align-items:center;justify-content:center;gap:7px;
     }
-    .form-note svg{flex-shrink:0;color:#2d5052}
+    .form-note svg{flex-shrink:0;color:var(--primary)}
 
-    .status-msg{
-      min-height:16px;
-      margin-top:10px;
-      font-size:.76rem;
-      font-weight:800;
-      color:var(--primary-light);
-      text-align:center;
-    }
+    .status-msg{min-height:16px;margin-top:10px;font-size:.76rem;font-weight:800;color:var(--primary-light);text-align:center}
 
-    /* Success state */
-    .success-block{
-      display:none;
-      text-align:center;
-      padding:8px 0;
+    /* Success */
+    .success-block{display:none;text-align:center;padding:14px 4px 8px}
+    .success-block.visible{display:block;animation:rise .5s both}
+    .success-ring{
+      position:relative;width:84px;height:84px;margin:0 auto 22px;border-radius:50%;
+      display:grid;place-items:center;
+      background:radial-gradient(closest-side,rgba(1,142,149,.28),transparent 72%);
     }
-    .success-block.visible{display:block}
+    .success-ring:before{
+      content:"";position:absolute;inset:0;border-radius:50%;
+      border:2px solid rgba(106,193,193,.35);
+      animation:halo 2.4s ease-out infinite;
+    }
+    @keyframes halo{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.35);opacity:0}}
     .success-icon{
-      width:64px;height:64px;
-      border-radius:50%;
+      width:64px;height:64px;border-radius:50%;
       background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       display:flex;align-items:center;justify-content:center;
-      margin:0 auto 18px;
-      box-shadow:0 12px 32px rgba(1,142,149,.38);
+      box-shadow:0 14px 34px -10px rgba(1,142,149,.7);
     }
     .success-icon svg{color:#fff}
-    .success-block h3{
-      color:#fff;
-      font-size:1.3rem;
-      font-weight:900;
-      margin-bottom:10px;
-    }
-    .success-block p{
-      color:#8aaeaf;
-      font-size:.84rem;
-      font-weight:600;
-      line-height:1.6;
-    }
+    .success-icon svg path{stroke-dasharray:26;stroke-dashoffset:26;animation:draw .5s .18s ease forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    .success-block h3{color:#fff;font-size:1.4rem;font-weight:900;margin-bottom:10px}
+    .success-block p{color:var(--muted);font-size:.86rem;font-weight:600;line-height:1.6;max-width:320px;margin:0 auto}
 
-    /* ── RESPONSIVE ──────────────────────────────── */
-    @media(max-width:860px){
-      body{flex-direction:column;align-items:stretch;min-height:100vh;height:auto}
+    /* entrance stagger */
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .anim{animation:rise .6s both}
+    .brand{animation:rise .6s both}
+    .hero .event-badge{animation:rise .6s .05s both}
+    .hero h1{animation:rise .6s .12s both}
+    .hero p{animation:rise .6s .2s both}
+    .date-pill{animation:rise .6s .28s both}
+    .form-card{animation:rise .6s .16s both}
+    .fields .field:nth-child(1){animation-delay:.24s}
+    .fields .field:nth-child(2){animation-delay:.3s}
+    .fields .field:nth-child(3){animation-delay:.36s}
+
+    /* ══════════════ RESPONSIVE ══════════════ */
+    @media(max-width:900px){
+      body{flex-direction:column;align-items:stretch;min-height:100dvh;height:auto}
       .panel-left{
-        flex:none;
-        padding:32px 24px 28px;
-        gap:16px;
-        min-height:300px;
-        justify-content:flex-end;
+        flex:none;min-height:340px;
+        padding:96px 26px 30px;
+        padding-left:max(26px,env(safe-area-inset-left));
+        justify-content:flex-end;gap:16px;
       }
-      .panel-left .bg-photo{object-position:center 30%}
-      .logo-wrap{width:80px;height:80px}
-      .logo-img{inset:4px;width:calc(100% - 8px);height:calc(100% - 8px)}
-      .school-name h1{font-size:1.2rem}
-      .welcome-line{font-size:.85rem;max-width:none}
-      .panel-right{
-        flex:none;
-        padding:32px 24px 40px;
-        border-left:0;
-        border-top:1px solid var(--line);
-      }
-      .form-header h2{font-size:1.3rem}
+      .panel-left .bg-photo{object-position:center 28%}
+      .brand{padding:22px 26px}
+      .logo-wrap{width:48px;height:48px}
+      .hero{max-width:none}
+      .hero p{font-size:.92rem}
+      .panel-right{flex:none;padding:26px 18px 40px;border-left:0}
+      .form-card{max-width:480px;margin:-64px auto 0;padding:30px 22px 26px}
+    }
+    @media(max-width:420px){
+      .panel-left{min-height:300px;padding:88px 20px 26px}
+      .brand{padding:18px 20px}
+      .form-card{margin-top:-56px;padding:26px 18px 24px}
+      .form-header h2{font-size:1.5rem}
+      .control input,.control select{height:52px}
     }
 
-    @media(max-width:500px){
-      .panel-left{padding:28px 20px 24px;gap:14px}
-      .panel-right{padding:28px 20px 36px}
+    @media(prefers-reduced-motion:reduce){
+      *{animation:none!important;transition:none!important}
+      .bg-photo--1{opacity:1}.bg-photo--2{opacity:0}
     }
   </style>
 </head>
 <body>
 
-  <!-- ── LEFT: branding + boas-vindas ─────────────── -->
+  <!-- ══════════ LEFT: hero ══════════ -->
   <aside class="panel-left">
-
     <img class="bg-photo bg-photo--1" src="/img/fachada.png" alt="" aria-hidden="true" />
     <img class="bg-photo bg-photo--2" src="/img/fachada-angular.png" alt="" aria-hidden="true" />
+    <div class="grain" aria-hidden="true"></div>
 
-    <div class="logo-wrap" aria-hidden="true">
-      <div class="logo-ring"></div>
-      <div class="logo-bg"></div>
-      <img class="logo-img" src="/img/vozup-logo.jpeg" alt="" />
-    </div>
-
-    <div class="school-name">
-      <h1>VOZUP</h1>
-      <span>Escola de Oratória e Liderança Emocional</span>
-    </div>
-
-    <div class="event-badge">🎉 Inauguração</div>
-
-    <p class="welcome-line">Que bom ter você aqui!<br>Confirme sua <strong>presença</strong> na inauguração da VOZUP.</p>
-
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="event-details">
-      <div class="event-row">
-        <div class="event-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div class="event-row-text">
-          <small>Inauguração</small>
-          <strong>Quinta-feira, 23 de Julho</strong>
-        </div>
+    <div class="brand">
+      <div class="logo-wrap" aria-hidden="true">
+        <div class="logo-ring"></div>
+        <div class="logo-bg"></div>
+        <img class="logo-img" src="/img/vozup-logo.jpeg" alt="" />
+      </div>
+      <div class="brand-name">
+        <b>VOZUP</b>
+        <span>Oratória &amp; Liderança Emocional</span>
       </div>
     </div>
 
+    <div class="hero">
+      <span class="event-badge"><span class="spark"></span>🎉 Inauguração</span>
+      <h1>Que bom ter <em>você</em> aqui.</h1>
+      <p>Confirme sua presença e faça parte deste momento com a VOZUP.</p>
+      <div class="date-pill">
+        <span class="ico" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </span>
+        <span>
+          <small>Inauguração</small>
+          <strong>Quinta-feira, 23 de Julho</strong>
+        </span>
+      </div>
+    </div>
   </aside>
 
-  <!-- ── RIGHT: form ───────────────────────────────── -->
+  <!-- ══════════ RIGHT: form ══════════ -->
   <main class="panel-right">
-    <div class="form-wrap">
+    <div class="form-card form-wrap">
 
       <div id="successBlock" class="success-block" role="status" aria-live="polite">
-        <div class="success-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="success-ring" aria-hidden="true">
+          <div class="success-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
         </div>
         <h3>Presença confirmada!</h3>
-        <p>Seja muito bem-vindo(a) à VOZUP. Em breve nossa equipe entrará em contato pelo WhatsApp.</p>
+        <p>Seja muito bem-vindo(a) à VOZUP. Em breve nossa equipe entra em contato pelo WhatsApp.</p>
       </div>
 
       <div class="form-header">
+        <span class="kicker">Inauguração VOZUP</span>
         <h2>Confirme sua presença</h2>
-        <p>Preencha os dados abaixo para confirmar sua presença.</p>
+        <p>Preencha os dados abaixo — leva menos de 30 segundos.</p>
       </div>
 
       <form id="regForm" novalidate>
         <div class="fields">
           <div class="field">
             <label for="nome">Nome completo</label>
-            <input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required />
+            <div class="control">
+              <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required />
+            </div>
             <span class="field-error" data-for="nome"></span>
           </div>
 
           <div class="field">
             <label for="telefone">Telefone / WhatsApp</label>
-            <input id="telefone" name="telefone" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel" required />
+            <div class="control">
+              <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+              <input id="telefone" name="telefone" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel" required />
+            </div>
             <span class="field-error" data-for="telefone"></span>
           </div>
 
           <div class="field">
             <label for="comoConheceu">Como você conheceu a VOZUP?</label>
-            <select id="comoConheceu" name="comoConheceu" required>
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="Fachada">Passei em frente / fachada</option>
-              <option value="Redes sociais">Redes sociais</option>
-              <option value="Indicação">Indicação de amigo/conhecido</option>
-              <option value="Google / internet">Google / internet</option>
-              <option value="Já sou aluno(a)">Já sou aluno(a)</option>
-            </select>
+            <div class="control">
+              <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <select id="comoConheceu" name="comoConheceu" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="Fachada">Passei em frente / fachada</option>
+                <option value="Redes sociais">Redes sociais</option>
+                <option value="Indicação">Indicação de amigo/conhecido</option>
+                <option value="Google / internet">Google / internet</option>
+                <option value="Já sou aluno(a)">Já sou aluno(a)</option>
+              </select>
+            </div>
             <span class="field-error" data-for="comoConheceu"></span>
           </div>
 
           <div class="field" id="indicacaoField" hidden>
             <label for="indicacaoNome">Quem te indicou?</label>
-            <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
+            <div class="control">
+              <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
+            </div>
             <span class="field-error" data-for="indicacaoNome"></span>
           </div>
         </div>
