@@ -575,6 +575,7 @@
         form.hidden = true;
         successBlock.classList.add('visible');
         sessionStorage.removeItem('vozup:clientId');
+        setTimeout(() => { location.href = 'https://g.page/r/CZuGCXXJmPtuEAE/review'; }, 2000);
       } catch(err){
         console.warn(err);
         statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
