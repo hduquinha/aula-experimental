@@ -411,6 +411,8 @@
         <h3>Obrigado pela presença! 🎉</h3>
         <p>Foi uma alegria ter você com a gente na inauguração da VOZUP.</p>
         <p style="margin-top:10px">Vamos te levar para o Google — deixe <strong>5 estrelas ⭐</strong> e uma <strong>foto 📸</strong> pra ajudar a gente!</p>
+        <p style="margin-top:14px;color:var(--muted-soft);font-size:.78rem;font-weight:700">Redirecionando em <span id="countdownNum">5</span>s...</p>
+        <button type="button" id="goNowBtn" class="btn-submit" style="margin-top:12px">Avaliar agora ⭐</button>
       </div>
 
       <div class="form-header">
@@ -576,7 +578,22 @@
         form.hidden = true;
         successBlock.classList.add('visible');
         sessionStorage.removeItem('vozup:clientId');
-        setTimeout(() => { location.href = 'https://g.page/r/CZuGCXXJmPtuEAE/review'; }, 4500);
+
+        const REVIEW_URL = 'https://g.page/r/CZuGCXXJmPtuEAE/review';
+        const countdownNum = document.getElementById('countdownNum');
+        let secondsLeft = 5;
+        const countdownTimer = setInterval(() => {
+          secondsLeft -= 1;
+          if(countdownNum) countdownNum.textContent = String(Math.max(secondsLeft, 0));
+          if(secondsLeft <= 0){
+            clearInterval(countdownTimer);
+            location.href = REVIEW_URL;
+          }
+        }, 1000);
+        document.getElementById('goNowBtn').addEventListener('click', () => {
+          clearInterval(countdownTimer);
+          location.href = REVIEW_URL;
+        });
       } catch(err){
         console.warn(err);
         statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
