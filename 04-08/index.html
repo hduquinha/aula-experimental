@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
+  <script defer src="/clarity.js"></script>
+  <title>Aula Exclusiva VOZUP · 04 de Agosto</title>
+  <meta name="description" content="Garanta sua vaga na aula exclusiva da VOZUP Escola de Oratória. Terça-feira, 04 de Agosto · 18h59 às 21h09. Vagas limitadas!" />
+
+  <!-- Open Graph / WhatsApp preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vozup-aula-experimental.vercel.app/21-07" />
+  <meta property="og:title" content="🎤 Aula Exclusiva VOZUP · 04 de Agosto" />
+  <meta property="og:description" content="Vagas limitadas! Terça-feira, 04 de Agosto · 18h59 às 21h09 · Rua Azevedo Soares, 1334 — Tatuapé, SP. Garanta sua vaga agora." />
+  <meta property="og:image" content="https://vozup-aula-experimental.vercel.app/img/fachada.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content="Aula Exclusiva VOZUP — Escola de Oratória e Liderança Emocional" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="VOZUP" />
+
+  <!-- Twitter Card (WhatsApp também usa) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="🎤 Aula Exclusiva VOZUP · 04 de Agosto" />
+  <meta name="twitter:description" content="Vagas limitadas! Garanta sua vaga agora." />
+  <meta name="twitter:image" content="https://vozup-campanha-b.vercel.app/img/fachada.png" />
+
+  <link rel="icon" href="/img/vozup-logo.jpeg" />
+  <link rel="apple-touch-icon" href="/img/vozup-logo.jpeg" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#018E95;
+      --primary-dark:#007881;
+      --primary-light:#6AC1C1;
+      --line:rgba(106,193,193,.2);
+      --gold:#f59e0b;
+      --gold-light:#fcd34d;
+      --danger:#e03131;
+    }
+
+    *{box-sizing:border-box;-webkit-font-smoothing:antialiased;margin:0;padding:0}
+
+    html,body{height:100%}
+
+    body{
+      font-family:'Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+      background:#000;
+      color:#fff;
+      display:flex;
+      align-items:stretch;
+      min-height:100vh;
+    }
+
+    /* ── LEFT PANEL ─────────────────────────────── */
+    .panel-left{
+      flex:0 0 46%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
+      gap:20px;
+      padding:40px 40px 44px;
+      position:relative;
+      overflow:hidden;
+      background:#000;
+    }
+    .panel-left .bg-photo{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center top;
+      display:block;
+      z-index:0;
+    }
+    .bg-photo--1{
+      animation:fade1 12s ease-in-out infinite;
+    }
+    .bg-photo--2{
+      animation:fade2 12s ease-in-out infinite;
+    }
+    @keyframes fade1{
+      0%,45%{opacity:1}
+      55%,100%{opacity:0}
+    }
+    @keyframes fade2{
+      0%,45%{opacity:0}
+      55%,100%{opacity:1}
+    }
+    .panel-left:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.10) 0%,
+        rgba(0,0,0,.30) 35%,
+        rgba(0,0,0,.72) 65%,
+        rgba(0,4,5,.92) 100%
+      );
+      pointer-events:none;
+    }
+    .panel-left:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:linear-gradient(
+        to right,
+        transparent 60%,
+        rgba(0,0,0,.55) 100%
+      );
+      pointer-events:none;
+    }
+    .panel-left>*{position:relative;z-index:2}
+
+    /* Logo circular */
+    .logo-wrap{
+      position:relative;
+      width:96px;
+      height:96px;
+      flex-shrink:0;
+    }
+    .logo-ring{
+      position:absolute;
+      inset:-5px;
+      border-radius:50%;
+      background:conic-gradient(var(--primary-light),var(--primary),var(--primary-light));
+      animation:spin 8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .logo-bg{
+      position:absolute;
+      inset:3px;
+      border-radius:50%;
+      background:#000;
+      z-index:1;
+    }
+    .logo-img{
+      position:absolute;
+      inset:5px;
+      border-radius:50%;
+      object-fit:cover;
+      width:calc(100% - 10px);
+      height:calc(100% - 10px);
+      z-index:2;
+      display:block;
+    }
+
+    /* School name */
+    .school-name{
+      text-align:center;
+    }
+    .school-name h1{
+      font-size:1.5rem;
+      font-weight:900;
+      letter-spacing:.5px;
+      color:#fff;
+      line-height:1;
+      margin-bottom:6px;
+      text-shadow:0 2px 12px rgba(0,0,0,.8);
+    }
+    .school-name span{
+      font-size:.7rem;
+      font-weight:700;
+      color:var(--primary-light);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      text-shadow:0 1px 6px rgba(0,0,0,.9);
+    }
+
+    /* Divider */
+    .divider{
+      width:48px;
+      height:2px;
+      background:linear-gradient(90deg,transparent,var(--primary),transparent);
+    }
+
+    /* Event badge */
+    .event-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:6px 14px;
+      border:1px solid rgba(245,158,11,.32);
+      border-radius:999px;
+      background:rgba(245,158,11,.10);
+      color:var(--gold-light);
+      font-size:.64rem;
+      font-weight:900;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+    }
+    .event-badge:before{
+      content:"";
+      width:7px;height:7px;
+      border-radius:50%;
+      background:var(--gold);
+      flex-shrink:0;
+    }
+
+    /* Event details list */
+    .event-details{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:0;
+      border:1px solid rgba(106,193,193,.28);
+      border-radius:10px;
+      overflow:hidden;
+      background:rgba(0,8,10,.62);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+    .event-row{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:13px 18px;
+      border-bottom:1px solid var(--line);
+    }
+    .event-row:last-child{border-bottom:0}
+    .event-icon{
+      width:34px;height:34px;
+      border-radius:8px;
+      background:rgba(1,142,149,.15);
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      color:var(--primary-light);
+    }
+    .event-row-text small{
+      display:block;
+      color:var(--primary-light);
+      font-size:.6rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      margin-bottom:2px;
+    }
+    .event-row-text strong{
+      color:#fff;
+      font-size:.84rem;
+      font-weight:800;
+      line-height:1.25;
+    }
+
+    /* ── RIGHT PANEL ─────────────────────────────── */
+    .panel-right{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:48px 40px;
+      background:#0a0f10;
+      border-left:1px solid var(--line);
+    }
+
+    .form-wrap{
+      width:100%;
+      max-width:400px;
+    }
+
+    .form-header{
+      margin-bottom:28px;
+    }
+    .form-header h2{
+      font-size:1.55rem;
+      font-weight:900;
+      color:#fff;
+      line-height:1.1;
+      margin-bottom:6px;
+    }
+    .form-header p{
+      color:#8aaeaf;
+      font-size:.82rem;
+      font-weight:600;
+    }
+
+    .fields{display:flex;flex-direction:column;gap:14px}
+
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{
+      color:#d4eaeb;
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .field input,.field textarea{
+      width:100%;
+      height:50px;
+      border:1.5px solid rgba(106,193,193,.22);
+      border-radius:8px;
+      background:#0f1e1f;
+      color:#fff;
+      padding:0 14px;
+      font:inherit;
+      font-size:.88rem;
+      font-weight:600;
+      transition:border-color .18s,box-shadow .18s;
+      outline:none;
+    }
+    .field input::placeholder,.field textarea::placeholder{color:#3a5658;font-weight:500}
+    .field input:focus,.field textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(1,142,149,.18);
+      background:#0d1a1b;
+    }
+    .field select{
+      width:100%;
+      height:50px;
+      border:1.5px solid rgba(106,193,193,.22);
+      border-radius:8px;
+      background:#0f1e1f;
+      color:#fff;
+      padding:0 14px;
+      font:inherit;
+      font-size:.88rem;
+      font-weight:600;
+      transition:border-color .18s,box-shadow .18s;
+      outline:none;
+    }
+    .field select:invalid{color:#8aaeaf}
+    .field select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(1,142,149,.18);
+      background:#0d1a1b;
+    }
+    .field textarea{height:auto;min-height:96px;padding:12px 14px;resize:vertical;line-height:1.45}
+    .field[hidden]{display:none}
+    .field-error{
+      min-height:14px;
+      color:var(--danger);
+      font-size:.7rem;
+      font-weight:800;
+    }
+
+    .btn-submit{
+      width:100%;
+      margin-top:20px;
+      appearance:none;
+      border:none;
+      border-radius:8px;
+      background:linear-gradient(135deg,var(--gold),#e8890a);
+      color:#1a0a00;
+      cursor:pointer;
+      height:52px;
+      padding:0 22px;
+      font:inherit;
+      font-weight:900;
+      font-size:.95rem;
+      letter-spacing:.3px;
+      transition:transform .18s,box-shadow .18s,filter .18s;
+      box-shadow:0 8px 24px rgba(245,158,11,.32);
+    }
+    .btn-submit:hover:not(:disabled){
+      transform:translateY(-2px);
+      box-shadow:0 14px 32px rgba(245,158,11,.42);
+      filter:brightness(1.06);
+    }
+    .btn-submit:active:not(:disabled){transform:translateY(0)}
+    .btn-submit:disabled{opacity:.6;cursor:not-allowed}
+
+    .form-note{
+      margin-top:12px;
+      color:#3d6062;
+      font-size:.72rem;
+      font-weight:600;
+      text-align:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+    }
+    .form-note svg{flex-shrink:0;color:#2d5052}
+
+    .status-msg{
+      min-height:16px;
+      margin-top:10px;
+      font-size:.76rem;
+      font-weight:800;
+      color:var(--primary-light);
+      text-align:center;
+    }
+
+    /* Success state */
+    .success-block{
+      display:none;
+      text-align:center;
+      padding:8px 0;
+    }
+    .success-block.visible{display:block}
+    .success-icon{
+      width:64px;height:64px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 18px;
+      box-shadow:0 12px 32px rgba(1,142,149,.38);
+    }
+    .success-icon svg{color:#fff}
+    .success-block h3{
+      color:#fff;
+      font-size:1.3rem;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .success-block p{
+      color:#8aaeaf;
+      font-size:.84rem;
+      font-weight:600;
+      line-height:1.6;
+    }
+
+    /* Vagas badge */
+    .vagas-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 16px;
+      border:1px solid rgba(224,49,49,.35);
+      border-radius:999px;
+      background:rgba(224,49,49,.12);
+      color:#fca5a5;
+      font-size:.65rem;
+      font-weight:900;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
+    .vagas-badge .dot{
+      width:7px;height:7px;
+      border-radius:50%;
+      background:#e03131;
+      flex-shrink:0;
+      animation:pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{opacity:1;transform:scale(1)}
+      50%{opacity:.5;transform:scale(.7)}
+    }
+
+    /* Urgency note near button */
+    .urgency-note{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      margin-top:10px;
+      color:#fca5a5;
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.1px;
+    }
+    .urgency-note svg{flex-shrink:0}
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media(max-width:860px){
+      body{flex-direction:column;align-items:stretch;min-height:100vh;height:auto}
+      .panel-left{
+        flex:none;
+        padding:32px 24px 28px;
+        gap:18px;
+        min-height:320px;
+        justify-content:flex-end;
+      }
+      .panel-left .bg-photo{object-position:center 30%}
+      .logo-wrap{width:80px;height:80px}
+      .logo-img{inset:4px;width:calc(100% - 8px);height:calc(100% - 8px)}
+      .school-name h1{font-size:1.2rem}
+      .event-details{display:grid;grid-template-columns:1fr 1fr}
+      .event-row{border-bottom:0;border-right:1px solid var(--line)}
+      .event-row:last-child{border-right:0;grid-column:1/-1;border-top:1px solid var(--line)}
+      .panel-right{
+        flex:none;
+        padding:32px 24px 40px;
+        border-left:0;
+        border-top:1px solid var(--line);
+      }
+      .form-header h2{font-size:1.3rem}
+    }
+
+    @media(max-width:500px){
+      .panel-left{padding:28px 20px 24px;gap:16px}
+      .event-details{grid-template-columns:1fr}
+      .event-row{border-right:0;border-bottom:1px solid var(--line)}
+      .event-row:last-child{border-top:0;grid-column:auto}
+      .panel-right{padding:28px 20px 36px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LEFT: branding + event info ─────────────── -->
+  <aside class="panel-left">
+
+    <img class="bg-photo bg-photo--1" src="/img/fachada.png" alt="" aria-hidden="true" />
+    <img class="bg-photo bg-photo--2" src="/img/fachada-angular.png" alt="" aria-hidden="true" />
+
+    <div class="logo-wrap" aria-hidden="true">
+      <div class="logo-ring"></div>
+      <div class="logo-bg"></div>
+      <img class="logo-img" src="/img/vozup-logo.jpeg" alt="" />
+    </div>
+
+    <div class="school-name">
+      <h1>VOZUP</h1>
+      <span>Escola de Oratória e Liderança Emocional</span>
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="event-badge">Aula Exclusiva</div>
+
+    <div class="vagas-badge">
+      <span class="dot"></span>
+      Vagas limitadas · Garanta a sua
+    </div>
+
+    <div class="event-details">
+      <div class="event-row">
+        <div class="event-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="event-row-text">
+          <small>Data</small>
+          <strong>Terça-feira, 04 de Agosto</strong>
+        </div>
+      </div>
+      <div class="event-row">
+        <div class="event-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="event-row-text">
+          <small>Horário</small>
+          <strong>18h59 às 21h09</strong>
+        </div>
+      </div>
+      <div class="event-row">
+        <div class="event-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="event-row-text">
+          <small>Local</small>
+          <strong>Rua Azevedo Soares, 1334<br>Tatuapé · São Paulo · SP</strong>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── RIGHT: form ───────────────────────────────── -->
+  <main class="panel-right">
+    <div class="form-wrap">
+
+      <div id="successBlock" class="success-block" role="status" aria-live="polite">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Vaga reservada!</h3>
+        <p>Em breve a equipe da VOZUP entrará em contato pelo WhatsApp com todos os detalhes da aula.</p>
+      </div>
+
+      <div class="form-header">
+        <h2>Garanta sua vaga</h2>
+        <p>Preencha os dados abaixo para confirmar sua presença.</p>
+      </div>
+
+      <form id="regForm" novalidate>
+        <div class="fields">
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required />
+            <span class="field-error" data-for="nome"></span>
+          </div>
+
+          <div class="field">
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input id="telefone" name="telefone" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel" required />
+            <span class="field-error" data-for="telefone"></span>
+          </div>
+
+          <div class="field">
+            <label for="profissao">Qual sua profissão?</label>
+            <input id="profissao" name="profissao" type="text" placeholder="Ex.: advogada, engenheiro, vendedor..." autocomplete="organization-title" required />
+            <span class="field-error" data-for="profissao"></span>
+          </div>
+
+          <div class="field">
+            <label for="objetivo">Por que você se interessou em desenvolver sua comunicação, oratória e inteligência emocional?</label>
+            <select id="objetivo" name="objetivo" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Quero melhorar minha performance no ambiente de trabalho">Quero melhorar minha performance no ambiente de trabalho</option>
+              <option value="Quero perder o medo de falar em público">Quero perder o medo de falar em público</option>
+              <option value="Quero começar a ministrar palestras e treinamentos">Quero começar a ministrar palestras e treinamentos</option>
+              <option value="Quero destravar para gravar vídeos para a internet">Quero destravar para gravar vídeos para a internet</option>
+              <option value="Quero melhorar meus relacionamentos interpessoais">Quero melhorar meus relacionamentos interpessoais</option>
+              <option value="Quero aumentar minhas habilidades para network">Quero aumentar minhas habilidades para network</option>
+            </select>
+            <span class="field-error" data-for="objetivo"></span>
+          </div>
+
+          <div class="field">
+            <label for="maiorDor">Qual o seu maior desafio em relação à comunicação? <span style="font-weight:500;color:#8aaeaf">(opcional)</span></label>
+            <textarea id="maiorDor" name="maiorDor" rows="3" placeholder="Conte pra gente com suas palavras"></textarea>
+            <span class="field-error" data-for="maiorDor"></span>
+          </div>
+
+          <div class="field">
+            <label for="comoConheceu">Por onde conheceu a gente?</label>
+            <select id="comoConheceu" name="comoConheceu" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Fachada">Fachada</option>
+              <option value="Redes sociais">Redes sociais</option>
+              <option value="Indicação">Indicação</option>
+            </select>
+            <span class="field-error" data-for="comoConheceu"></span>
+          </div>
+
+          <div class="field" id="indicacaoField" hidden>
+            <label for="indicacaoNome">Quem te indicou?</label>
+            <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
+            <span class="field-error" data-for="indicacaoNome"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Garantir minha vaga</button>
+
+        <div class="urgency-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Vagas limitadas — não deixe para depois
+        </div>
+
+        <p class="form-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Seus dados são protegidos. Sem compromisso de pagamento.
+        </p>
+
+        <div class="status-msg" id="statusMsg" role="status" aria-live="polite"></div>
+      </form>
+
+    </div>
+  </main>
+
+  <script>
+    const API_ENDPOINT = '/api/inscricao';
+
+    const form       = document.getElementById('regForm');
+    const submitBtn  = document.getElementById('submitBtn');
+    const statusMsg  = document.getElementById('statusMsg');
+    const successBlock = document.getElementById('successBlock');
+
+    document.getElementById('telefone').addEventListener('input', function(){
+      let raw = this.value.replace(/\D+/g,'');
+      // Se vier com o 55 (código do país) na frente, remove so esses 2 dígitos — mantém DDD + número (10 ou 11 dígitos), sem forçar 11.
+      if (raw.length > 11 && raw.startsWith('55')) raw = raw.slice(2);
+      const d = raw.slice(0, 11);
+      if(d.length > 10)      this.value = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+      else if(d.length > 6)  this.value = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+      else if(d.length > 2)  this.value = `(${d.slice(0,2)}) ${d.slice(2)}`;
+      else                   this.value = d ? `(${d}` : '';
+    });
+
+    const indicacaoField = document.getElementById('indicacaoField');
+    document.getElementById('comoConheceu').addEventListener('change', function(){
+      indicacaoField.hidden = this.value !== 'Indicação';
+      if(indicacaoField.hidden) form.indicacaoNome.value = '';
+    });
+
+    function clearErrors(){
+      form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+    }
+    function setError(name, msg){
+      const el = form.querySelector(`.field-error[data-for="${name}"]`);
+      if(el) el.textContent = msg;
+    }
+
+    function validate(){
+      clearErrors();
+      let ok = true;
+      const nome = form.nome.value.trim();
+      if(!nome){ setError('nome','Campo obrigatório.'); ok=false; }
+      else if(nome.split(/\s+/).filter(Boolean).length < 2){ setError('nome','Informe seu nome completo.'); ok=false; }
+
+      const digits = form.telefone.value.replace(/\D+/g,'');
+      if(!digits){ setError('telefone','Campo obrigatório.'); ok=false; }
+      else if(digits.length < 10 || digits.length > 11){ setError('telefone','Informe um número válido com DDD.'); ok=false; }
+
+      if(!form.profissao.value.trim()){ setError('profissao','Campo obrigatório.'); ok=false; }
+
+      if(!form.objetivo.value){ setError('objetivo','Selecione uma opção.'); ok=false; }
+
+      const comoConheceu = form.comoConheceu.value;
+      if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
+      else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
+        setError('indicacaoNome','Informe quem te indicou.'); ok=false;
+      }
+      return ok;
+    }
+
+    function toTitleCase(str){
+      const lc = new Set(['da','de','do','das','dos','e','em','na','no','nas','nos']);
+      return str.trim().toLowerCase().split(/\s+/).filter(Boolean)
+        .map((w,i)=>(i>0&&lc.has(w))?w:w[0].toUpperCase()+w.slice(1)).join(' ');
+    }
+
+    function getClientId(){
+      const k='vozup:clientId';
+      let id=sessionStorage.getItem(k);
+      if(!id){ id=crypto.randomUUID?crypto.randomUUID():`id-${Date.now()}-${Math.random().toString(36).slice(2)}`; sessionStorage.setItem(k,id); }
+      return id;
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if(!validate()) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      statusMsg.textContent = '';
+
+      const payload = {
+        nome: toTitleCase(form.nome.value),
+        telefone: form.telefone.value.replace(/\D+/g,''),
+        profissao: toTitleCase(form.profissao.value),
+        objetivo: form.objetivo.value,
+        maior_desafio_comunicacao: form.maiorDor.value.trim(),
+        como_conheceu: form.comoConheceu.value,
+        indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
+        nome_evento: 'Aula Exclusiva VOZUP',
+        escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
+        modalidade: 'Aula exclusiva · presencial',
+        data: 'Terça-feira, 04 de Agosto · 18h59 às 21h09',
+        data_treinamento: 'Aula Exclusiva 04/08/2026',
+        local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
+        origem: 'Aula Exclusiva',
+        clientId: getClientId(),
+        timestamp: new Date().toISOString(),
+        page: location.href,
+        _final: true
+      };
+
+      try{
+        const res = await fetch(API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        if(!res.ok) throw new Error('Falha');
+        form.closest('.form-wrap').querySelector('.form-header').hidden = true;
+        form.hidden = true;
+        successBlock.classList.add('visible');
+        sessionStorage.removeItem('vozup:clientId');
+      } catch(err){
+        console.warn(err);
+        statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
+        statusMsg.style.color = '#f87171';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Garantir minha vaga';
+      }
+    });
+  </script>
+
+</body>
+</html>
