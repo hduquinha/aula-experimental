@@ -6,13 +6,13 @@
   <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
   <script defer src="/clarity.js"></script>
   <title>Aula Exclusiva VOZUP · 28 de Julho</title>
-  <meta name="description" content="Garanta sua vaga na aula exclusiva da VOZUP Escola de Oratória. Terça-feira, 28 de Julho · 18h59 às 21h09. Vagas limitadas!" />
+  <meta name="description" content="As vagas para a Aula Exclusiva VOZUP de 28 de Julho estão esgotadas. Confira as próximas datas." />
 
   <!-- Open Graph / WhatsApp preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vozup-aula-experimental.vercel.app/21-07" />
   <meta property="og:title" content="🎤 Aula Exclusiva VOZUP · 28 de Julho" />
-  <meta property="og:description" content="Vagas limitadas! Terça-feira, 28 de Julho · 18h59 às 21h09 · Rua Azevedo Soares, 1334 — Tatuapé, SP. Garanta sua vaga agora." />
+  <meta property="og:description" content="As vagas para a Aula Exclusiva VOZUP de 28 de Julho estão esgotadas. Confira as próximas datas." />
   <meta property="og:image" content="https://vozup-aula-experimental.vercel.app/img/fachada.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="Aula Exclusiva VOZUP — Escola de Oratória e Liderança Emocional" />
@@ -22,7 +22,7 @@
   <!-- Twitter Card (WhatsApp também usa) -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="🎤 Aula Exclusiva VOZUP · 28 de Julho" />
-  <meta name="twitter:description" content="Vagas limitadas! Garanta sua vaga agora." />
+  <meta name="twitter:description" content="As vagas estão esgotadas. Confira as próximas datas." />
   <meta name="twitter:image" content="https://vozup-campanha-b.vercel.app/img/fachada.png" />
 
   <link rel="icon" href="/img/vozup-logo.jpeg" />
@@ -460,6 +460,56 @@
     }
     .urgency-note svg{flex-shrink:0}
 
+    /* Sold-out state */
+    .sold-out-card{
+      text-align:center;
+      padding:20px 0;
+    }
+    .sold-out-icon{
+      width:68px;height:68px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 20px;
+      color:#fca5a5;
+      background:rgba(224,49,49,.12);
+      border:1px solid rgba(224,49,49,.35);
+    }
+    .sold-out-card h2{
+      color:#fff;
+      font-size:1.65rem;
+      font-weight:900;
+      margin:0 0 12px;
+    }
+    .sold-out-card p{
+      max-width:370px;
+      margin:0 auto;
+      color:#a8c1c2;
+      font-size:.92rem;
+      font-weight:600;
+      line-height:1.65;
+    }
+    .next-date-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
+      margin-top:28px;
+      padding:16px 20px;
+      border-radius:10px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      box-shadow:0 10px 28px rgba(1,142,149,.28);
+      font-size:.92rem;
+      font-weight:900;
+      text-decoration:none;
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .next-date-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 14px 32px rgba(1,142,149,.38);
+    }
+
     /* ── RESPONSIVE ──────────────────────────────── */
     @media(max-width:860px){
       body{flex-direction:column;align-items:stretch;min-height:100vh;height:auto}
@@ -520,7 +570,7 @@
 
     <div class="vagas-badge">
       <span class="dot"></span>
-      Vagas limitadas · Garanta a sua
+      Vagas esgotadas
     </div>
 
     <div class="event-details">
@@ -555,212 +605,20 @@
 
   </aside>
 
-  <!-- ── RIGHT: form ───────────────────────────────── -->
+  <!-- ── RIGHT: sold-out notice ─────────────────────── -->
   <main class="panel-right">
     <div class="form-wrap">
-
-      <div id="successBlock" class="success-block" role="status" aria-live="polite">
-        <div class="success-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      <section class="sold-out-card" aria-labelledby="soldOutTitle">
+        <div class="sold-out-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="16" y1="8" x2="8" y2="16"/></svg>
         </div>
-        <h3>Vaga reservada!</h3>
-        <p>Em breve a equipe da VOZUP entrará em contato pelo WhatsApp com todos os detalhes da aula.</p>
-      </div>
-
-      <div class="form-header">
-        <h2>Garanta sua vaga</h2>
-        <p>Preencha os dados abaixo para confirmar sua presença.</p>
-      </div>
-
-      <form id="regForm" novalidate>
-        <div class="fields">
-          <div class="field">
-            <label for="nome">Nome completo</label>
-            <input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required />
-            <span class="field-error" data-for="nome"></span>
-          </div>
-
-          <div class="field">
-            <label for="telefone">Telefone / WhatsApp</label>
-            <input id="telefone" name="telefone" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel" required />
-            <span class="field-error" data-for="telefone"></span>
-          </div>
-
-          <div class="field">
-            <label for="profissao">Qual sua profissão?</label>
-            <input id="profissao" name="profissao" type="text" placeholder="Ex.: advogada, engenheiro, vendedor..." autocomplete="organization-title" required />
-            <span class="field-error" data-for="profissao"></span>
-          </div>
-
-          <div class="field">
-            <label for="objetivo">Por que você se interessou em desenvolver sua comunicação, oratória e inteligência emocional?</label>
-            <select id="objetivo" name="objetivo" required>
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="Quero melhorar minha performance no ambiente de trabalho">Quero melhorar minha performance no ambiente de trabalho</option>
-              <option value="Quero perder o medo de falar em público">Quero perder o medo de falar em público</option>
-              <option value="Quero começar a ministrar palestras e treinamentos">Quero começar a ministrar palestras e treinamentos</option>
-              <option value="Quero destravar para gravar vídeos para a internet">Quero destravar para gravar vídeos para a internet</option>
-              <option value="Quero melhorar meus relacionamentos interpessoais">Quero melhorar meus relacionamentos interpessoais</option>
-              <option value="Quero aumentar minhas habilidades para network">Quero aumentar minhas habilidades para network</option>
-            </select>
-            <span class="field-error" data-for="objetivo"></span>
-          </div>
-
-          <div class="field">
-            <label for="maiorDor">Qual o seu maior desafio em relação à comunicação? <span style="font-weight:500;color:#8aaeaf">(opcional)</span></label>
-            <textarea id="maiorDor" name="maiorDor" rows="3" placeholder="Conte pra gente com suas palavras"></textarea>
-            <span class="field-error" data-for="maiorDor"></span>
-          </div>
-
-          <div class="field">
-            <label for="comoConheceu">Por onde conheceu a gente?</label>
-            <select id="comoConheceu" name="comoConheceu" required>
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="Fachada">Fachada</option>
-              <option value="Redes sociais">Redes sociais</option>
-              <option value="Indicação">Indicação</option>
-            </select>
-            <span class="field-error" data-for="comoConheceu"></span>
-          </div>
-
-          <div class="field" id="indicacaoField" hidden>
-            <label for="indicacaoNome">Quem te indicou?</label>
-            <input id="indicacaoNome" name="indicacaoNome" type="text" placeholder="Nome de quem te indicou" />
-            <span class="field-error" data-for="indicacaoNome"></span>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn">Garantir minha vaga</button>
-
-        <div class="urgency-note">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Vagas limitadas — não deixe para depois
-        </div>
-
-        <p class="form-note">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Seus dados são protegidos. Sem compromisso de pagamento.
-        </p>
-
-        <div class="status-msg" id="statusMsg" role="status" aria-live="polite"></div>
-      </form>
+        <h2 id="soldOutTitle">Vagas esgotadas</h2>
+        <p>As vagas para a Aula Exclusiva do dia 28 de julho foram preenchidas. Escolha uma das próximas datas para participar.</p>
+        <a class="next-date-btn" href="/30-07/">Ver próximas datas <span aria-hidden="true">→</span></a>
+      </section>
 
     </div>
   </main>
-
-  <script>
-    const API_ENDPOINT = '/api/inscricao';
-
-    const form       = document.getElementById('regForm');
-    const submitBtn  = document.getElementById('submitBtn');
-    const statusMsg  = document.getElementById('statusMsg');
-    const successBlock = document.getElementById('successBlock');
-
-    document.getElementById('telefone').addEventListener('input', function(){
-      let raw = this.value.replace(/\D+/g,'');
-      // Se vier com o 55 (código do país) na frente, remove so esses 2 dígitos — mantém DDD + número (10 ou 11 dígitos), sem forçar 11.
-      if (raw.length > 11 && raw.startsWith('55')) raw = raw.slice(2);
-      const d = raw.slice(0, 11);
-      if(d.length > 10)      this.value = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
-      else if(d.length > 6)  this.value = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
-      else if(d.length > 2)  this.value = `(${d.slice(0,2)}) ${d.slice(2)}`;
-      else                   this.value = d ? `(${d}` : '';
-    });
-
-    const indicacaoField = document.getElementById('indicacaoField');
-    document.getElementById('comoConheceu').addEventListener('change', function(){
-      indicacaoField.hidden = this.value !== 'Indicação';
-      if(indicacaoField.hidden) form.indicacaoNome.value = '';
-    });
-
-    function clearErrors(){
-      form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
-    }
-    function setError(name, msg){
-      const el = form.querySelector(`.field-error[data-for="${name}"]`);
-      if(el) el.textContent = msg;
-    }
-
-    function validate(){
-      clearErrors();
-      let ok = true;
-      const nome = form.nome.value.trim();
-      if(!nome){ setError('nome','Campo obrigatório.'); ok=false; }
-      else if(nome.split(/\s+/).filter(Boolean).length < 2){ setError('nome','Informe seu nome completo.'); ok=false; }
-
-      const digits = form.telefone.value.replace(/\D+/g,'');
-      if(!digits){ setError('telefone','Campo obrigatório.'); ok=false; }
-      else if(digits.length < 10 || digits.length > 11){ setError('telefone','Informe um número válido com DDD.'); ok=false; }
-
-      if(!form.profissao.value.trim()){ setError('profissao','Campo obrigatório.'); ok=false; }
-
-      if(!form.objetivo.value){ setError('objetivo','Selecione uma opção.'); ok=false; }
-
-      const comoConheceu = form.comoConheceu.value;
-      if(!comoConheceu){ setError('comoConheceu','Selecione uma opção.'); ok=false; }
-      else if(comoConheceu === 'Indicação' && !form.indicacaoNome.value.trim()){
-        setError('indicacaoNome','Informe quem te indicou.'); ok=false;
-      }
-      return ok;
-    }
-
-    function toTitleCase(str){
-      const lc = new Set(['da','de','do','das','dos','e','em','na','no','nas','nos']);
-      return str.trim().toLowerCase().split(/\s+/).filter(Boolean)
-        .map((w,i)=>(i>0&&lc.has(w))?w:w[0].toUpperCase()+w.slice(1)).join(' ');
-    }
-
-    function getClientId(){
-      const k='vozup:clientId';
-      let id=sessionStorage.getItem(k);
-      if(!id){ id=crypto.randomUUID?crypto.randomUUID():`id-${Date.now()}-${Math.random().toString(36).slice(2)}`; sessionStorage.setItem(k,id); }
-      return id;
-    }
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      if(!validate()) return;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando...';
-      statusMsg.textContent = '';
-
-      const payload = {
-        nome: toTitleCase(form.nome.value),
-        telefone: form.telefone.value.replace(/\D+/g,''),
-        profissao: toTitleCase(form.profissao.value),
-        objetivo: form.objetivo.value,
-        maior_desafio_comunicacao: form.maiorDor.value.trim(),
-        como_conheceu: form.comoConheceu.value,
-        indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
-        nome_evento: 'Aula Exclusiva VOZUP',
-        escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
-        modalidade: 'Aula exclusiva · presencial',
-        data: 'Terça-feira, 28 de Julho · 18h59 às 21h09',
-        data_treinamento: 'Aula Exclusiva 28/07/2026',
-        local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
-        origem: 'Aula Exclusiva',
-        clientId: getClientId(),
-        timestamp: new Date().toISOString(),
-        page: location.href,
-        _final: true
-      };
-
-      try{
-        const res = await fetch(API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        if(!res.ok) throw new Error('Falha');
-        form.closest('.form-wrap').querySelector('.form-header').hidden = true;
-        form.hidden = true;
-        successBlock.classList.add('visible');
-        sessionStorage.removeItem('vozup:clientId');
-      } catch(err){
-        console.warn(err);
-        statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
-        statusMsg.style.color = '#f87171';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Garantir minha vaga';
-      }
-    });
-  </script>
 
 </body>
 </html>
