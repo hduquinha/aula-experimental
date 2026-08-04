@@ -96,7 +96,7 @@ export default function handler(req, res) {
   <line x1="651" y1="386" x2="651" y2="392" stroke="#6AC1C1" stroke-width="1.5" stroke-linecap="round" />
   <line x1="651" y1="392" x2="657" y2="395" stroke="#6AC1C1" stroke-width="1.5" stroke-linecap="round" />
   <text x="674" y="384" font-family="Arial, sans-serif" font-size="10" fill="#6AC1C1" font-weight="700" letter-spacing="1">HORÁRIO</text>
-  <text x="674" y="402" font-family="Arial, sans-serif" font-size="15" fill="#ffffff" font-weight="700">18h59 às 21h09</text>
+  <text x="674" y="402" font-family="Arial, sans-serif" font-size="15" fill="#ffffff" font-weight="700">18h59</text>
 
   <!-- Local -->
   <rect x="620" y="436" width="500" height="64" rx="10" fill="#018E95" fill-opacity="0.06" stroke="#018E95" stroke-width="1" stroke-opacity="0.2" />
