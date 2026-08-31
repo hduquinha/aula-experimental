@@ -1,22 +1,18 @@
-https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
   <script defer src="/clarity.js"></script>
-  <script defer src="/whatsapp-success.js"></script>
-  <!-- Esta data ja passou -- manda direto pra edicao ativa da Aula Exclusiva -->
-  <script>window.location.replace('/03-09/');</script>
-  <noscript><meta http-equiv="refresh" content="0; url=/03-09/"></noscript>
-  <title>Aula Exclusiva VOZUP · 07 de Julho</title>
-  <meta name="description" content="Garanta sua vaga na aula exclusiva da VOZUP Escola de Oratória. Terça-feira, 07 de Julho · 18h59. Vagas limitadas!" />
+  <title>Aula Exclusiva VOZUP · 08 de Setembro</title>
+  <meta name="description" content="Garanta sua vaga na aula exclusiva da VOZUP Escola de Oratória. Terça-feira, 08 de Setembro · 18h59. Vagas limitadas!" />
 
   <!-- Open Graph / WhatsApp preview -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://vozup-aula-experimental.vercel.app/" />
-  <meta property="og:title" content="🎤 Aula Exclusiva VOZUP · 07 de Julho" />
-  <meta property="og:description" content="Vagas limitadas! Terça-feira, 07 de Julho · 18h59 · Rua Azevedo Soares, 1334 — Tatuapé, SP. Garanta sua vaga agora." />
+  <meta property="og:url" content="https://vozup-aula-experimental.vercel.app/08-09" />
+  <meta property="og:title" content="🎤 Aula Exclusiva VOZUP · 08 de Setembro" />
+  <meta property="og:description" content="Vagas limitadas! Terça-feira, 08 de Setembro · 18h59 · Rua Azevedo Soares, 1334 — Tatuapé, SP. Garanta sua vaga agora." />
   <meta property="og:image" content="https://vozup-aula-experimental.vercel.app/img/fachada.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="Aula Exclusiva VOZUP — Escola de Oratória e Liderança Emocional" />
@@ -25,7 +21,7 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
 
   <!-- Twitter Card (WhatsApp também usa) -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="🎤 Aula Exclusiva VOZUP · 07 de Julho" />
+  <meta name="twitter:title" content="🎤 Aula Exclusiva VOZUP · 08 de Setembro" />
   <meta name="twitter:description" content="Vagas limitadas! Garanta sua vaga agora." />
   <meta name="twitter:image" content="https://vozup-campanha-b.vercel.app/img/fachada.png" />
 
@@ -208,6 +204,26 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
       border-radius:50%;
       background:var(--gold);
       flex-shrink:0;
+    }
+
+    /* Investment */
+    .investment-badge{
+      display:inline-flex;
+      align-items:baseline;
+      gap:8px;
+      padding:8px 16px;
+      border:1px solid rgba(106,193,193,.38);
+      border-radius:999px;
+      background:rgba(1,142,149,.16);
+      color:#d4eaeb;
+      font-size:.65rem;
+      font-weight:700;
+      letter-spacing:.4px;
+    }
+    .investment-badge strong{
+      color:#fff;
+      font-size:.82rem;
+      font-weight:900;
     }
 
     /* Event details list */
@@ -505,13 +521,13 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
   <!-- ── LEFT: branding + event info ─────────────── -->
   <aside class="panel-left">
 
-    <img class="bg-photo bg-photo--1" src="img/fachada.png" alt="" aria-hidden="true" />
-    <img class="bg-photo bg-photo--2" src="img/fachada-angular.png" alt="" aria-hidden="true" />
+    <img class="bg-photo bg-photo--1" src="/img/fachada.png" alt="" aria-hidden="true" />
+    <img class="bg-photo bg-photo--2" src="/img/fachada-angular.png" alt="" aria-hidden="true" />
 
     <div class="logo-wrap" aria-hidden="true">
       <div class="logo-ring"></div>
       <div class="logo-bg"></div>
-      <img class="logo-img" src="img/vozup-logo.jpeg" alt="" />
+      <img class="logo-img" src="/img/vozup-logo.jpeg" alt="" />
     </div>
 
     <div class="school-name">
@@ -522,6 +538,11 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
     <div class="divider" aria-hidden="true"></div>
 
     <div class="event-badge">Aula Exclusiva</div>
+
+    <div class="investment-badge">
+      <span>Investimento</span>
+      <strong>R$ 497,00</strong>
+    </div>
 
     <div class="vagas-badge">
       <span class="dot"></span>
@@ -535,7 +556,7 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
         </div>
         <div class="event-row-text">
           <small>Data</small>
-          <strong>Terça-feira, 07 de Julho</strong>
+          <strong>Terça-feira, 08 de Setembro</strong>
         </div>
       </div>
       <div class="event-row">
@@ -740,8 +761,9 @@ https://vozup-aula-exclusiva.vercel.app/20-08/<!DOCTYPE html>
         nome_evento: 'Aula Exclusiva VOZUP',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
         modalidade: 'Aula exclusiva · presencial',
-        data: 'Terça-feira, 07 de Julho · 18h59',
-        data_treinamento: 'Aula Exclusiva 07/07/2026',
+        valor_aula_exclusiva: '497.00',
+        data: 'Terça-feira, 08 de Setembro · 18h59',
+        data_treinamento: 'Aula Exclusiva 08/09/2026',
         local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
         origem: 'Aula Exclusiva',
         clientId: getClientId(),
