@@ -278,7 +278,13 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:center;
+      /* NÃO usar justify-content:center aqui. Quando o formulário fica mais alto
+         que a tela — o caso de qualquer notebook de 768px —, a centralização
+         empurra o topo para fora da área rolável: o <h2> do formulário some e
+         não há como chegar nele nem rolando. Era por isso que a página só
+         "ficava certa" com o zoom em 80%. Centralizar pelo margin:auto do filho
+         dá o mesmo resultado quando sobra espaço e não corta quando falta. */
+      justify-content:flex-start;
       padding:48px 40px;
       background:#0a0f10;
       border-left:1px solid var(--line);
@@ -287,6 +293,19 @@
     .form-wrap{
       width:100%;
       max-width:400px;
+      margin-block:auto;
+    }
+
+    /* Telas baixas (notebook de 768px, janela não maximizada): aperta o ritmo
+       vertical para o formulário caber inteiro sem rolagem. */
+    @media(max-height:860px){
+      .panel-right{padding-top:24px;padding-bottom:24px}
+      .form-header{margin-bottom:14px}
+      .form-header h2{font-size:1.35rem}
+      .fields{gap:10px}
+      .field textarea{min-height:72px}
+      .btn-submit{margin-top:14px}
+      .panel-left{padding:28px 32px 30px;gap:14px}
     }
 
     .form-header{
@@ -541,7 +560,7 @@
 
     <div class="investment-badge">
       <span>Investimento</span>
-      <strong>R$ 497,00</strong>
+      <strong>R$ 397,00</strong>
     </div>
 
     <div class="vagas-badge">
@@ -761,7 +780,7 @@
         nome_evento: 'Aula Exclusiva VOZUP',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
         modalidade: 'Aula exclusiva · presencial',
-        valor_aula_exclusiva: '497.00',
+        valor_aula_exclusiva: '397.00',
         data: 'Quinta-feira, 03 de Setembro · 18h59',
         data_treinamento: 'Aula Exclusiva 03/09/2026',
         local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
