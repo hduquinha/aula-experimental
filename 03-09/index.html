@@ -818,7 +818,7 @@
         sessionStorage.removeItem('vozup:clientId');
         if(isWorkshop){
           const message = `Olá! Meu nome é ${payload.nome}. Acabei de me cadastrar no Workshop de Oratória VOZUP e gostaria de falar com uma pessoa da equipe para definir a data do meu workshop.`;
-          window.location.assign(`https://wa.me/551120901412?text=${encodeURIComponent(message)}`);
+          window.top.location.assign(`https://wa.me/551120901412?text=${encodeURIComponent(message)}`);
         }
       } catch(err){
         console.warn(err);
