@@ -703,10 +703,12 @@
     const successBlock = document.getElementById('successBlock');
 
     if(isWorkshop){
+      const workshopStyle = document.createElement('style');
+      workshopStyle.textContent = '.investment-badge{display:none!important}.panel-right{overflow-y:auto!important}.form-wrap{margin-block:0!important}';
+      document.head.appendChild(workshopStyle);
       document.title = 'Workshop de Oratória VOZUP';
       document.querySelector('meta[name="description"]').setAttribute('content', 'Cadastre-se e defina a data do seu Workshop de Oratória com a equipe VOZUP.');
       document.querySelector('.event-badge').textContent = 'Workshop de Oratória';
-      document.querySelector('.investment-badge').hidden = true;
       const rows = document.querySelectorAll('.event-row-text');
       rows[0].querySelector('small').textContent = 'Data';
       rows[0].querySelector('strong').textContent = 'A definir com a equipe VOZUP';
