@@ -16,54 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    :root{--teal:#018e95;--light:#6ac1c1;--gold:#f59e0b;--ink:#071718}
-    *{box-sizing:border-box} body{margin:0;font-family:Montserrat,Arial,sans-serif;color:#fff;background:#000}
-    .page{min-height:100vh;background:linear-gradient(90deg,rgba(106,193,193,.07) 1px,transparent 1px),linear-gradient(rgba(106,193,193,.06) 1px,transparent 1px),radial-gradient(640px 500px at 8% 8%,rgba(1,142,149,.28),transparent 70%),#000;background-size:62px 62px,62px 62px,auto}
-    header{padding:24px 20px;text-align:center;border-bottom:1px solid rgba(106,193,193,.18)} header img{width:170px;height:auto}
-    main{width:min(1050px,100%);margin:auto;padding:62px 24px 76px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
-    .tag{display:inline-block;padding:8px 13px;border:1px solid rgba(245,158,11,.42);border-radius:999px;color:#fcd34d;background:rgba(245,158,11,.1);font-size:.72rem;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
-    h1{margin:20px 0 16px;font-size:clamp(2.35rem,5vw,4.25rem);line-height:.98;letter-spacing:-1.5px} h1 span{color:var(--light);display:block}
-    .lead{max-width:600px;color:#d3e6e7;font-size:1.05rem;line-height:1.65}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:28px 0 0;padding:0;list-style:none}.benefits li{display:flex;gap:9px;align-items:center;color:#e7f5f5;font-size:.86rem;font-weight:700}.benefits li:before{content:'✓';display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--light);color:var(--ink);font-weight:900}
-    .card{padding:30px 26px;border:1px solid rgba(106,193,193,.28);border-radius:20px;background:linear-gradient(160deg,rgba(1,142,149,.19),rgba(1,142,149,.035));box-shadow:0 28px 70px rgba(0,0,0,.42)}.card h2{margin:0 0 8px;font-size:1.48rem}.card>p{margin:0 0 25px;color:#9fc5c7;font-size:.86rem;line-height:1.55}
-    .field{display:flex;flex-direction:column;gap:7px;margin-top:15px}.field label{font-size:.78rem;font-weight:800;color:#d7eeee}.field input{height:51px;border:1px solid rgba(106,193,193,.28);border-radius:9px;background:#0b1a1b;color:#fff;padding:0 14px;font:600 .9rem Montserrat,Arial}.field input:focus{outline:3px solid rgba(1,142,149,.24);border-color:var(--teal)}.field input::placeholder{color:#527174}.error{min-height:14px;color:#fca5a5;font-size:.7rem;font-weight:700}
-    button,.whatsapp{width:100%;min-height:52px;margin-top:20px;border:0;border-radius:9px;background:linear-gradient(135deg,#fcd34d,var(--gold));color:#1b0c00;font:900 .9rem Montserrat,Arial;cursor:pointer;box-shadow:0 10px 24px rgba(245,158,11,.28)}button:disabled{opacity:.65;cursor:wait}.note{margin:13px 0 0;color:#7da2a4;font-size:.7rem;line-height:1.5;text-align:center}.status{min-height:18px;margin-top:12px;text-align:center;color:var(--light);font-size:.76rem;font-weight:700}.success{display:none;text-align:center}.success.visible{display:block}.success .icon{margin:0 auto 16px;width:60px;height:60px;display:grid;place-items:center;border-radius:50%;background:var(--teal);font-size:1.7rem}.success h2{margin:0 0 10px}.success p{color:#a4c5c7;font-size:.86rem;line-height:1.55}.whatsapp{display:flex;align-items:center;justify-content:center;background:#25d366;color:#062b17;text-decoration:none}
-    footer{padding:26px 20px 38px;border-top:1px solid rgba(106,193,193,.16);color:#68898b;text-align:center;font-size:.72rem;font-weight:700}
-    @media(max-width:780px){main{grid-template-columns:1fr;padding:42px 20px 54px;gap:34px}.benefits{grid-template-columns:1fr}h1{font-size:2.5rem}.card{padding:26px 20px}}
-  </style>
+  <style>html,body,iframe{width:100%;height:100%;margin:0;border:0;display:block;background:#000}</style>
 </head>
 <body>
-  <div class="page">
-    <header><img src="/img/vozup-logo-light.jpeg" alt="VOZUP" /></header>
-    <main>
-      <section>
-        <span class="tag">Workshop exclusivo VOZUP</span>
-        <h1>Fale com presença <span>sem travar por dentro.</span></h1>
-        <p class="lead">Uma experiência prática para desenvolver clareza, confiança e presença na sua comunicação. Você define a melhor data diretamente com uma pessoa da equipe VOZUP.</p>
-        <ul class="benefits"><li>Fale com mais segurança</li><li>Organize melhor as ideias</li><li>Controle o nervosismo</li><li>Pratique técnicas aplicáveis</li></ul>
-      </section>
-      <section class="card">
-        <div id="success" class="success" role="status" aria-live="polite">
-          <div class="icon">✓</div><h2>Cadastro realizado!</h2><p>Estamos abrindo o WhatsApp para você definir a data do seu workshop com a equipe VOZUP.</p><a id="whatsapp" class="whatsapp" href="#">Abrir o WhatsApp</a>
-        </div>
-        <div id="formContent"><h2>Quero participar</h2><p>Preencha os seus dados para falar com a equipe e combinar a data ideal.</p>
-          <form id="form" novalidate>
-            <div class="field"><label for="nome">Nome completo</label><input id="nome" name="nome" autocomplete="name" placeholder="Seu nome completo" required /><span class="error" data-error="nome"></span></div>
-            <div class="field"><label for="telefone">Telefone / WhatsApp</label><input id="telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(00) 00000-0000" required /><span class="error" data-error="telefone"></span></div>
-            <button id="submit" type="submit">Cadastrar e falar no WhatsApp</button><p class="note">Seus dados são protegidos. Sem compromisso de pagamento.</p><div id="status" class="status" role="status"></div>
-          </form>
-        </div>
-      </section>
-    </main>
-    <footer>VOZUP · Escola de Oratória e Liderança Emocional</footer>
-  </div>
-  <script>
-    const form=document.getElementById('form'), phone=document.getElementById('telefone'), submit=document.getElementById('submit'), status=document.getElementById('status');
-    phone.addEventListener('input',()=>{let n=phone.value.replace(/\D/g,'');if(n.length>11&&n.startsWith('55'))n=n.slice(2);n=n.slice(0,11);phone.value=n.length>10?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n.length>6?`(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`:n.length>2?`(${n.slice(0,2)}) ${n.slice(2)}`:n?`(${n}`:''});
-    function error(key,text=''){document.querySelector(`[data-error="${key}"]`).textContent=text}
-    function title(value){return value.trim().toLowerCase().replace(/\b\w/g,char=>char.toUpperCase())}
-    function whatsappUrl(name){const message=`Olá! Meu nome é ${name}. Acabei de me cadastrar no Workshop de Oratória VOZUP e gostaria de falar com uma pessoa da equipe para definir a data do meu workshop.`;return `https://wa.me/551120901412?text=${encodeURIComponent(message)}`}
-    form.addEventListener('submit',async event=>{event.preventDefault();error('nome');error('telefone');const nome=form.nome.value.trim(),digits=phone.value.replace(/\D/g,'');let valid=true;if(nome.split(/\s+/).filter(Boolean).length<2){error('nome','Informe seu nome completo.');valid=false}if(digits.length<10||digits.length>11){error('telefone','Informe um WhatsApp válido com DDD.');valid=false}if(!valid)return;submit.disabled=true;submit.textContent='Enviando...';status.textContent='Realizando seu cadastro...';const payload={nome:title(nome),telefone:digits,nome_evento:'Workshop de Oratória VOZUP',origem:'Workshop VozUP',unidade_negocio:'Voz UP',modalidade:'Workshop de oratória',data_workshop:'A definir com a equipe via WhatsApp',page:location.href,clientId:crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}` ,timestamp:new Date().toISOString(),_final:true};try{const response=await fetch('/api/inscricao',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Falha');const url=whatsappUrl(payload.nome);document.getElementById('whatsapp').href=url;document.getElementById('formContent').hidden=true;document.getElementById('success').classList.add('visible');window.location.assign(url)}catch{status.textContent='Não foi possível enviar agora. Tente novamente.';submit.disabled=false;submit.textContent='Cadastrar e falar no WhatsApp'}});
-  </script>
+  <iframe title="Workshop de Oratória VOZUP" src="/03-09/?workshop=1"></iframe>
 </body>
 </html>

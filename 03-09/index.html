@@ -695,11 +695,29 @@
 
   <script>
     const API_ENDPOINT = '/api/inscricao';
+    const isWorkshop = new URLSearchParams(location.search).has('workshop');
 
     const form       = document.getElementById('regForm');
     const submitBtn  = document.getElementById('submitBtn');
     const statusMsg  = document.getElementById('statusMsg');
     const successBlock = document.getElementById('successBlock');
+
+    if(isWorkshop){
+      document.title = 'Workshop de Oratória VOZUP';
+      document.querySelector('meta[name="description"]').setAttribute('content', 'Cadastre-se e defina a data do seu Workshop de Oratória com a equipe VOZUP.');
+      document.querySelector('.event-badge').textContent = 'Workshop de Oratória';
+      document.querySelector('.investment-badge').hidden = true;
+      const rows = document.querySelectorAll('.event-row-text');
+      rows[0].querySelector('small').textContent = 'Data';
+      rows[0].querySelector('strong').textContent = 'A definir com a equipe VOZUP';
+      rows[1].querySelector('small').textContent = 'Formato';
+      rows[1].querySelector('strong').textContent = 'Workshop prático de oratória';
+      document.querySelector('.form-header h2').textContent = 'Quero participar do workshop';
+      document.querySelector('.form-header p').textContent = 'Preencha seus dados e, ao concluir, defina a data diretamente pelo WhatsApp.';
+      submitBtn.textContent = 'Cadastrar e falar no WhatsApp';
+      successBlock.querySelector('h3').textContent = 'Cadastro realizado!';
+      successBlock.querySelector('p').textContent = 'Estamos abrindo o WhatsApp para você definir a data do seu workshop.';
+    }
 
     document.getElementById('telefone').addEventListener('input', function(){
       let raw = this.value.replace(/\D+/g,'');
@@ -777,14 +795,12 @@
         maior_desafio_comunicacao: form.maiorDor.value.trim(),
         como_conheceu: form.comoConheceu.value,
         indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
-        nome_evento: 'Aula Exclusiva VOZUP',
+        nome_evento: isWorkshop ? 'Workshop de Oratória VOZUP' : 'Aula Exclusiva VOZUP',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
-        modalidade: 'Aula exclusiva · presencial',
-        valor_aula_exclusiva: '397.00',
-        data: 'Quinta-feira, 03 de Setembro · 18h59',
-        data_treinamento: 'Aula Exclusiva 03/09/2026',
+        modalidade: isWorkshop ? 'Workshop de oratória' : 'Aula exclusiva · presencial',
+        ...(isWorkshop ? { data_workshop: 'A definir com a equipe via WhatsApp', unidade_negocio: 'Voz UP' } : { valor_aula_exclusiva: '397.00', data: 'Quinta-feira, 03 de Setembro · 18h59', data_treinamento: 'Aula Exclusiva 03/09/2026' }),
         local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
-        origem: 'Aula Exclusiva',
+        origem: isWorkshop ? 'Workshop VozUP' : 'Aula Exclusiva',
         clientId: getClientId(),
         timestamp: new Date().toISOString(),
         page: location.href,
@@ -798,6 +814,10 @@
         form.hidden = true;
         successBlock.classList.add('visible');
         sessionStorage.removeItem('vozup:clientId');
+        if(isWorkshop){
+          const message = `Olá! Meu nome é ${payload.nome}. Acabei de me cadastrar no Workshop de Oratória VOZUP e gostaria de falar com uma pessoa da equipe para definir a data do meu workshop.`;
+          window.location.assign(`https://wa.me/551120901412?text=${encodeURIComponent(message)}`);
+        }
       } catch(err){
         console.warn(err);
         statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
