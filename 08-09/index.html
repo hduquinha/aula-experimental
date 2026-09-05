@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
   <script defer src="/clarity.js"></script>
-  <title>Aula Exclusiva VOZUP · 08 de Setembro</title>
-  <meta name="description" content="Garanta sua vaga na aula exclusiva da VOZUP Escola de Oratória. Terça-feira, 08 de Setembro · 18h59. Vagas limitadas!" />
+  <title>Workshop de Oratória e Liderança Emocional · 08 de Setembro</title>
+  <meta name="description" content="Garanta sua vaga no Workshop de Oratória e Liderança Emocional da VOZUP. Terça-feira, 08 de Setembro · 18h59. Vagas limitadas!" />
 
   <!-- Open Graph / WhatsApp preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vozup-workshop.vercel.app/08-09" />
-  <meta property="og:title" content="🎤 Aula Exclusiva VOZUP · 08 de Setembro" />
+  <meta property="og:title" content="🎤 Workshop de Oratória e Liderança Emocional · 08 de Setembro" />
   <meta property="og:description" content="Vagas limitadas! Terça-feira, 08 de Setembro · 18h59 · Rua Azevedo Soares, 1334 — Tatuapé, SP. Garanta sua vaga agora." />
   <meta property="og:image" content="https://vozup-workshop.vercel.app/img/fachada.png" />
   <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:alt" content="Aula Exclusiva VOZUP — Escola de Oratória e Liderança Emocional" />
+  <meta property="og:image:alt" content="Workshop de Oratória e Liderança Emocional — VOZUP" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="VOZUP" />
 
   <!-- Twitter Card (WhatsApp também usa) -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="🎤 Aula Exclusiva VOZUP · 08 de Setembro" />
+  <meta name="twitter:title" content="🎤 Workshop de Oratória e Liderança Emocional · 08 de Setembro" />
   <meta name="twitter:description" content="Vagas limitadas! Garanta sua vaga agora." />
   <meta name="twitter:image" content="https://vozup-workshop.vercel.app/img/fachada.png" />
 
@@ -556,7 +556,7 @@
 
     <div class="divider" aria-hidden="true"></div>
 
-    <div class="event-badge">Aula Exclusiva</div>
+    <div class="event-badge">Workshop</div>
 
     <div class="investment-badge">
       <span>Investimento</span>
@@ -694,7 +694,10 @@
   </main>
 
   <script>
-    const API_ENDPOINT = '/api/inscricao';
+    // A API central grava a inscricao e cria o card no funil do CRM.
+    // Nao usar a API local da landing: ela so tinha fallback e deixava o
+    // cadastro fora da distribuicao comercial quando o Postgres caia.
+    const API_ENDPOINT = 'https://dashboard.escolavozup.com/api/vozup/lead';
 
     const form       = document.getElementById('regForm');
     const submitBtn  = document.getElementById('submitBtn');
@@ -777,14 +780,14 @@
         maior_desafio_comunicacao: form.maiorDor.value.trim(),
         como_conheceu: form.comoConheceu.value,
         indicacao_nome: form.comoConheceu.value === 'Indicação' ? toTitleCase(form.indicacaoNome.value) : '',
-        nome_evento: 'Aula Exclusiva VOZUP',
+        nome_evento: 'Workshop 08/09/2026',
         escola: 'VOZUP - Escola de Oratória e Liderança Emocional',
-        modalidade: 'Aula exclusiva · presencial',
+        modalidade: 'Workshop presencial',
         valor_aula_exclusiva: '397.00',
         data: 'Terça-feira, 08 de Setembro · 18h59',
-        data_treinamento: 'Aula Exclusiva 08/09/2026',
+        data_treinamento: 'Workshop 08/09/2026',
         local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
-        origem: 'Aula Exclusiva',
+        origem: 'Workshop',
         clientId: getClientId(),
         timestamp: new Date().toISOString(),
         page: location.href,
