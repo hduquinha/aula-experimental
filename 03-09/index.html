@@ -716,7 +716,13 @@
       rows[1].querySelector('strong').textContent = 'Workshop prático de oratória';
       document.querySelector('.form-header h2').textContent = 'Quero participar do workshop';
       document.querySelector('.form-header p').textContent = 'Preencha seus dados e, ao concluir, defina a data diretamente pelo WhatsApp.';
-      submitBtn.textContent = 'Cadastrar e falar no WhatsApp';
+      document.querySelector('label[for="objetivo"]').textContent = 'O que você gostaria de desenvolver neste momento da sua vida?';
+      document.querySelector('label[for="maiorDor"]').innerHTML = 'Hoje, o que mais tem dificultado você de se expressar ou se sentir mais confiante? <span style="font-weight:500;color:#8aaeaf">(opcional)</span>';
+      const setembroAmareloOption = document.createElement('option');
+      setembroAmareloOption.value = 'Campanha Setembro Amarelo';
+      setembroAmareloOption.textContent = 'Campanha Setembro Amarelo';
+      document.getElementById('comoConheceu').appendChild(setembroAmareloOption);
+      submitBtn.textContent = 'Quero participar da experiência 💛';
       successBlock.querySelector('h3').textContent = 'Cadastro realizado!';
       successBlock.querySelector('p').textContent = 'Estamos abrindo o WhatsApp para você definir a data do seu workshop.';
     }
@@ -825,7 +831,7 @@
         statusMsg.textContent = 'Não foi possível enviar. Tente novamente.';
         statusMsg.style.color = '#f87171';
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Garantir minha vaga';
+        submitBtn.textContent = isWorkshop ? 'Quero participar da experiência 💛' : 'Garantir minha vaga';
       }
     });
   </script>
