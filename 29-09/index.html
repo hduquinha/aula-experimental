@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Microsoft Clarity (mapa de calor/gravacoes) — ver clarity.js na raiz -->
   <script defer src="/clarity.js"></script>
+  <!-- Pixel da Meta: sem ele a Meta ve o cadastro na landing e nunca o AGENDAMENTO -->
+  <script defer src="/meta-pixel.js"></script>
   <title>Workshop de Oratória e Liderança Emocional · 29 de Setembro</title>
   <meta name="description" content="Garanta sua vaga no Workshop de Oratória e Liderança Emocional da VOZUP. Terça-feira, 29 de Setembro · 18h59. Vagas limitadas!" />
 
@@ -772,6 +774,9 @@
       submitBtn.textContent = 'Enviando...';
       statusMsg.textContent = '';
 
+      const metaEventId = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : 'vozup-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
       const payload = {
         nome: toTitleCase(form.nome.value),
         telefone: form.telefone.value.replace(/\D+/g,''),
@@ -789,6 +794,9 @@
         local: 'Rua Azevedo Soares, 1334 - Tatuapé, São Paulo - SP',
         origem: 'Workshop',
         clientId: getClientId(),
+        // Mesmo id no navegador e no servidor: e o que impede a Meta de
+        // contar este agendamento duas vezes (ver meta-pixel.js).
+        metaEventId: metaEventId,
         timestamp: new Date().toISOString(),
         page: location.href,
         _final: true
@@ -797,6 +805,8 @@
       try{
         const res = await fetch(API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
         if(!res.ok) throw new Error('Falha');
+        // Só agora: agendamento avisado antes da confirmação seria agendamento que não existe.
+        if(typeof window.vozupTrackAgendamento === 'function') window.vozupTrackAgendamento(metaEventId, payload.nome_evento);
         form.closest('.form-wrap').querySelector('.form-header').hidden = true;
         form.hidden = true;
         successBlock.classList.add('visible');

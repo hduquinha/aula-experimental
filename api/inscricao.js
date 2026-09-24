@@ -583,6 +583,99 @@ function buildWorkshopLeadMessage(payload) {
   ].filter(Boolean).join('\n');
 }
 
+// ── Conversions API da Meta: avisar que houve AGENDAMENTO ────────────
+
+/**
+ * Busca o clique de anuncio que trouxe esta pessoa.
+ *
+ * O agendamento quase sempre acontece DIAS depois do anuncio, por WhatsApp e em
+ * outro dominio — sem fbclid na URL e sem cookie compartilhado. Por isso o
+ * pixel do navegador sozinho atribui mal: ele dispara, mas a Meta nao sabe de
+ * qual anuncio veio. O fbclid do cadastro ORIGINAL (gravado pela landing) e o
+ * que costura as duas pontas. Em 24/09/2026, 139 de 147 leads pagos do mes
+ * tinham esse campo.
+ *
+ * Pega o mais recente que TENHA fbclid — nao o mais recente em geral, que a
+ * esta altura ja e a propria inscricao do Workshop, sem clique nenhum.
+ */
+async function findClickIdByPhone(pg, phone) {
+  const phoneDigits = normalizePhoneDigits(phone);
+  if (phoneDigits.length < 10) return null;
+
+  const result = await pg.query(
+    getPhoneLookupQuery("AND coalesce(payload->>'fbclid', '') <> ''"),
+    [phoneDigits]
+  );
+  const fbclid = result.rows[0]?.payload?.fbclid;
+  const criadoEm = result.rows[0]?.criado_em;
+  if (!fbclid) return null;
+
+  // Formato exigido pela Meta: fb.1.<carimbo do clique em ms>.<fbclid>
+  const clickedAt = criadoEm instanceof Date ? criadoEm.getTime() : Date.now();
+  return `fb.1.${clickedAt}.${fbclid}`;
+}
+
+function sha256Hex(value) {
+  return require('crypto').createHash('sha256').update(String(value)).digest('hex');
+}
+
+/**
+ * Manda o evento `Schedule` para a Meta pelo servidor.
+ *
+ * Desligado enquanto `META_CAPI_TOKEN` nao existir — pode subir sem o token e
+ * so passa a valer quando alguem gerar um no Gerenciador de Eventos. Nunca
+ * derruba a inscricao: o lead ja esta gravado quando isto roda.
+ *
+ * `metaEventId` e o mesmo id que o pixel do navegador usou, para a Meta unir os
+ * dois envios em UMA conversao em vez de contar duas.
+ */
+async function sendMetaScheduleEvent(pg, payload) {
+  const pixelId = String(process.env.META_PIXEL_ID || '1321351659702121').trim();
+  const token = String(process.env.META_CAPI_TOKEN || '').trim();
+  if (!token || !pixelId) return;
+
+  // Agendamento e inscricao COM DATA. O formulario sem data grava
+  // "A definir com a equipe via WhatsApp" e nao e compromisso marcado.
+  const treinamento = String(payload.data_treinamento || '');
+  if (!/^(Workshop|Aula Exclusiva)\s+\d{2}\/\d{2}\//i.test(treinamento)) return;
+
+  const phoneDigits = normalizePhoneDigits(payload.telefone);
+  if (phoneDigits.length < 10) return;
+
+  const userData = { ph: [sha256Hex(`55${phoneDigits}`)] };
+  const email = String(payload.email || '').trim().toLowerCase();
+  if (email) userData.em = [sha256Hex(email)];
+
+  const fbc = await findClickIdByPhone(pg, payload.telefone).catch(() => null);
+  if (fbc) userData.fbc = fbc;
+
+  const body = {
+    data: [{
+      event_name: 'Schedule',
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: 'website',
+      event_source_url: String(payload.page || '') || undefined,
+      event_id: String(payload.metaEventId || '') || undefined,
+      user_data: userData,
+      custom_data: { content_name: String(payload.nome_evento || treinamento), content_category: 'Workshop' },
+    }],
+  };
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${encodeURIComponent(pixelId)}/events?access_token=${encodeURIComponent(token)}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal }
+    );
+    if (!res.ok) {
+      console.error('Meta CAPI recusou o evento:', res.status, (await res.text()).slice(0, 300));
+    }
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function sendWhatsAppNotification(payload) {
   const baseUrl = (String(process.env.UAZAPI_BASE_URL || 'https://free.uazapi.com')).replace(/\/+$/, '');
   const token = String(process.env.UAZAPI_INSTANCE_TOKEN || '').trim();
@@ -716,6 +809,9 @@ async function handler(req, res) {
     if (isFinal) {
       sendWhatsAppNotification(payloadToInsert).catch((err) => {
         console.error('Falha ao enviar notificacao WhatsApp:', err);
+      });
+      sendMetaScheduleEvent(pg, payloadToInsert).catch((err) => {
+        console.error('Falha ao avisar a Meta do agendamento:', err);
       });
     }
 
