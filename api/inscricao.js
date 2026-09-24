@@ -466,6 +466,30 @@ function buildPhoneConflictMetadata(decision, matchRow) {
   return metadata;
 }
 
+// Aula Exclusiva, Aula Experimental e Workshop sao o mesmo evento: desde
+// 24/09/2026 tudo e gravado como "Workshop" / "Workshop DD/MM/AAAA" (ver
+// docs/cartilha-formularios-produtos.md). As paginas antigas de aula seguem no
+// ar (e /workshop embute /03-09/), por isso o nome e unificado aqui, por onde
+// todas passam. A mesma regra renomeou o historico no banco.
+const OLD_EVENT_NAME = /^(aula exclusiva|aula experimental)/i;
+const OLD_EVENT_TITLE = /^(aula exclusiva|aula experimental|workshop de orat)/i;
+const WORKSHOP_DATE_LABEL = /^Workshop \d{2}\/\d{2}\/\d{4}$/;
+
+function unifyEventName(payload) {
+  const unified = { ...payload };
+  for (const key of ['origem', 'treinamento_nome', 'treinamento', 'data_treinamento']) {
+    const value = typeof unified[key] === 'string' ? unified[key].trim() : '';
+    if (OLD_EVENT_NAME.test(value)) unified[key] = value.replace(OLD_EVENT_NAME, 'Workshop');
+  }
+  if (typeof unified.nome_evento === 'string' && OLD_EVENT_TITLE.test(unified.nome_evento.trim())) {
+    unified.nome_evento = WORKSHOP_DATE_LABEL.test(unified.data_treinamento || '') ? unified.data_treinamento : 'Workshop';
+  }
+  if (typeof unified.modalidade === 'string' && OLD_EVENT_TITLE.test(unified.modalidade.trim())) {
+    unified.modalidade = 'Workshop presencial';
+  }
+  return unified;
+}
+
 async function preparePayloadForInsert(pg, payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     return payload;
@@ -795,7 +819,7 @@ async function handler(req, res) {
     }
 
     const isFinal = payload._meta?.final === true || payload._final === true || payload._final === 'true';
-    const basePayload = await preparePayloadForInsert(pg, payload);
+    const basePayload = unifyEventName(await preparePayloadForInsert(pg, payload));
 
     const payloadToInsert = {
       ...basePayload,
