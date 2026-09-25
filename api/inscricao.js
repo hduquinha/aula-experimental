@@ -490,6 +490,30 @@ function unifyEventName(payload) {
   return unified;
 }
 
+// Link de indicacao do Workshop (tela /indicacao do CRM): o link de cada data
+// vem com ?indicador=<slug>, e a pagina manda o endereco inteiro em `page`.
+// Grava quem indicou sem mexer no que a pessoa respondeu em "Como conheceu?".
+// Se a tabela nao responder, fica ao menos o slug.
+async function stampWorkshopReferral(pg, payload) {
+  let slug = '';
+  try {
+    slug = new URL(String(payload.page || '')).searchParams.get('indicador') || '';
+  } catch {
+    return payload;
+  }
+  slug = slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 60);
+  if (!slug) return payload;
+
+  let nome = null;
+  try {
+    const { rows } = await pg.query('SELECT name FROM dashboard.workshop_referral_links WHERE slug = $1', [slug]);
+    nome = rows[0]?.name || null;
+  } catch (err) {
+    console.error('Falha ao ler o link de indicacao do Workshop:', err);
+  }
+  return { ...payload, indicador_workshop: slug, ...(nome ? { indicador_workshop_nome: nome } : {}) };
+}
+
 async function preparePayloadForInsert(pg, payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     return payload;
@@ -819,7 +843,7 @@ async function handler(req, res) {
     }
 
     const isFinal = payload._meta?.final === true || payload._final === true || payload._final === 'true';
-    const basePayload = unifyEventName(await preparePayloadForInsert(pg, payload));
+    const basePayload = await stampWorkshopReferral(pg, unifyEventName(await preparePayloadForInsert(pg, payload)));
 
     const payloadToInsert = {
       ...basePayload,
