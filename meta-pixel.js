@@ -11,16 +11,20 @@
  * O evento é `Schedule`, que é o padrão da Meta para marcação de compromisso.
  *
  * `eventID` é obrigatório na chamada: o mesmo id vai no corpo do formulário e o
- * servidor reenvia o evento pela Conversions API com ele (ver
- * `sendMetaScheduleEvent` em api/inscricao.js). Sem esse id a mesma inscrição
- * contaria duas vezes — foi exatamente o que aconteceu na landing quando se
- * disparou fbq e GTM juntos.
+ * dashboard reenvia o evento pela Conversions API com ele (ver
+ * `sendMetaSchedule` em dashboard/lib/metaConversions.ts — as páginas enviam
+ * a inscrição para /api/vozup/lead do dashboard, não para api/inscricao.js).
+ * Sem esse id a mesma inscrição contaria duas vezes — foi exatamente o que
+ * aconteceu na landing quando se disparou fbq e GTM juntos.
  *
- * O id do pixel é público (já aparece no HTML da landing), então fica aqui
- * mesmo em vez de virar variável de ambiente, que não existe em página estática.
+ * O pixel é o MESMO em que a campanha otimiza: o que o GTM (GTM-MWVSCMS2) da
+ * landing usa para o Lead. O `fbq` inline da landing usa outro (1321351659702121)
+ * e mandar o agendamento para lá deixava a campanha sem enxergá-lo. O id é
+ * público (aparece no GTM), então fica aqui mesmo em vez de virar variável de
+ * ambiente, que não existe em página estática.
  */
 (function () {
-  var PIXEL_ID = '1321351659702121';
+  var PIXEL_ID = '1541688054093290';
 
   /* eslint-disable */
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
